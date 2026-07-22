@@ -89,7 +89,7 @@
             color: var(--on-background);
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: calc(var(--bottom-nav-height) + 16px);
+            padding-bottom: calc(var(--bottom-nav-height) + 20px);
         }
         img { max-width: 100%; display: block; }
         a { text-decoration: none; color: inherit; }
@@ -232,7 +232,7 @@
         .menu-container {
             max-width: 1400px;
             margin: 8px auto 0;
-            padding: 8px var(--gutter-mobile) calc(var(--bottom-nav-height) + 16px);
+            padding: 8px var(--gutter-mobile) calc(var(--bottom-nav-height) + 20px);
         }
         .menu-grid {
             display: grid;
@@ -378,22 +378,25 @@
             margin-bottom: 8px;
         }
 
-        /* ── Bottom Nav (with icons) ── */
+        /* ── Bottom Nav — centered, larger font ── */
         .bottom-nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 200;
+            width: calc(100% - 24px);
+            max-width: 600px;
             background: var(--surface-container-lowest);
-            border-top: 2px solid var(--primary);
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
-            padding: 6px 8px env(safe-area-inset-bottom, 8px);
+            border: 1.5px solid var(--outline-variant);
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            padding: 6px 3px;
             height: var(--bottom-nav-height);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
+            justify-content: flex-start;
+            gap: 2px;
             overflow-x: auto;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
@@ -403,13 +406,13 @@
         .bottom-nav .nav-item {
             flex: 0 0 auto;
             min-width: auto;
-            padding: 6px 16px;
+            padding: 4px 6px;
             border-radius: var(--radius-lg);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2px;
+            gap: 1px;
             cursor: pointer;
             transition: all 0.2s ease;
             border: 2px solid transparent;
@@ -417,13 +420,13 @@
             color: var(--on-surface-variant);
             font-family: var(--font-headline);
             font-weight: 700;
-            font-size: 0.7rem;
+            font-size: 0.85rem; /* bigger font size */
             text-align: center;
             white-space: nowrap;
             position: relative;
         }
         .bottom-nav .nav-item i {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: var(--secondary);
             transition: all 0.2s ease;
         }
@@ -442,26 +445,26 @@
             border-color: var(--outline-variant);
         }
         .bottom-nav .nav-item .nav-label {
-            font-size: 0.55rem;
+            font-size: 0.85rem; /* bigger font size */
             font-weight: 600;
             line-height: 1.1;
         }
 
         @media (max-width: 680px) {
-            .bottom-nav { padding: 4px 6px env(safe-area-inset-bottom, 6px); height: calc(var(--bottom-nav-height) - 4px); gap: 4px; justify-content: center; }
-            .bottom-nav .nav-item { font-size: 0.6rem; padding: 4px 10px; }
-            .bottom-nav .nav-item i { font-size: 0.85rem; }
-            .bottom-nav .nav-item .nav-label { font-size: 0.45rem; }
+            .bottom-nav { padding: 4px 3px; height: calc(var(--bottom-nav-height) - 4px); gap: 2px; }
+            .bottom-nav .nav-item { padding: 3px 4px; font-size: 0.8rem; }
+            .bottom-nav .nav-item i { font-size: 1rem; }
+            .bottom-nav .nav-item .nav-label { font-size: 0.8rem; }
         }
         @media (max-width: 420px) {
-            .bottom-nav .nav-item { font-size: 0.5rem; padding: 3px 6px; }
-            .bottom-nav .nav-item i { font-size: 0.7rem; }
-            .bottom-nav .nav-item .nav-label { font-size: 0.4rem; }
+            .bottom-nav .nav-item { padding: 2px 3px; font-size: 0.75rem; }
+            .bottom-nav .nav-item i { font-size: 0.9rem; }
+            .bottom-nav .nav-item .nav-label { font-size: 0.75rem; }
         }
         @media (min-width: 681px) {
-            .bottom-nav .nav-item { font-size: 0.85rem; padding: 8px 18px; }
+            .bottom-nav .nav-item { padding: 6px 8px; font-size: 0.95rem; }
             .bottom-nav .nav-item i { font-size: 1.2rem; }
-            .bottom-nav .nav-item .nav-label { font-size: 0.65rem; }
+            .bottom-nav .nav-item .nav-label { font-size: 0.95rem; }
         }
 
         /* ── Cart Modal ── (unchanged) ── */
@@ -1233,7 +1236,7 @@
             });
         }
 
-        // ── Render Cart Modal ──
+        // ── Render Cart Modal (IMAGES REMOVED) ──
         function renderCartModal() {
             const container = document.getElementById('cartItemsList');
             const summary = document.getElementById('cartSummary');
@@ -1250,7 +1253,6 @@
                 html += `
                         <div class="cart-item-row">
                             <div class="cart-item-info">
-                                <img src="${item.img || 'https://placehold.co/60x60/F6EFE6/2E6B43?text=طعام'}" class="cart-item-img" alt="${escapeHtml(item.name)}">
                                 <div>
                                     <div class="ci-name">${escapeHtml(item.name)}</div>
                                     <div class="ci-price">${item.price} ج.م</div>
