@@ -1817,24 +1817,26 @@
         ];
 
         // ── Locations ──
+        // NOTE: addresses use template literals (backticks) since they can safely
+        // contain line breaks. The original file used plain double-quoted strings
+        // with raw newlines inside them, which is invalid JavaScript syntax and
+        // caused the entire script to fail (menu, nav, and cart never loaded).
         const locations = [{
             id: 1,
             name: "الفرع الاول",
-            address: " ميدان سيدي قطب مدخل النبوي المهندس بجوار المستشفي العام 
-",
+            address: `ميدان سيدي قطب مدخل النبوي المهندس بجوار المستشفي العام`,
             coords: "30.5700,31.5200",
             icon: "fa-store"
         }, {
             id: 2,
-            name: " الفرع الثاني",
-            address: " الجمعيه الاستهلاكيه بجوار المزلقان الوسطاني 
-",
+            name: "الفرع الثاني",
+            address: `الجمعيه الاستهلاكيه بجوار المزلقان الوسطاني`,
             coords: "30.5725,31.5225",
             icon: "fa-city"
         }, {
             id: 3,
             name: "الفرع الثالث",
-            address: " دوران المصنع امام مستشفى تداوي ال٤٧ ",
+            address: "دوران المصنع امام مستشفى تداوي ال٤٧",
             coords: "30.5675,31.5175",
             icon: "fa-water"
         }];
