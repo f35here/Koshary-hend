@@ -7,10 +7,12 @@
     <link rel="icon" type="image/jpeg" href="./images/logo.jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    </script>
 
     <style>
         /* ═══════════════════════════════════════════════════════════════
-           RESET & VARIABLES — NO ANIMATIONS
+           RESET & VARIABLES — NO ANIMATIONS (except smooth scroll)
            ═══════════════════════════════════════════════════════════════ */
         * {
             margin: 0;
@@ -47,7 +49,7 @@
         }
 
         html {
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
             font-size: 16px;
         }
@@ -1043,8 +1045,6 @@
             font-size: 0.8rem !important;
         }
 
-        /* ── No small alert ── */
-
         /* ═══════════════════════════════════════════════════════════════
            RESPONSIVE
            ═══════════════════════════════════════════════════════════════ */
@@ -1470,7 +1470,7 @@
     </footer>
 
     <!-- ═══════════════════════════════════════════════════════════════
-    JAVASCRIPT — NO ANIMATIONS, NO ALERTS
+    JAVASCRIPT — NO ANIMATIONS, NO ALERTS (except checkout modals)
     ═══════════════════════════════════════════════════════════════ -->
     <script>
         (function app() {
@@ -1740,6 +1740,11 @@
                     this._activeCategory = categoryId;
                     this.renderNav();
                     this.render();
+                    // Smooth scroll to menu container
+                    const container = document.getElementById('mainContent');
+                    if (container) {
+                        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 },
 
                 getActive() { return this._activeCategory; },
@@ -1759,8 +1764,6 @@
                             `;
                         item.addEventListener('click', () => {
                             this.setActive(cat.id);
-                            document.getElementById('mainContent')?.scrollIntoView({ behavior: 'auto',
-                                block: 'start' });
                         });
                         nav.appendChild(item);
                     });
@@ -1871,7 +1874,6 @@
 
                             // If already in cart, just update display
                             if (Cart.getQuantity(itemId) > 0) {
-                                // No alert, just update
                                 const stepper = btn.closest('.menu-card').querySelector('.qty-stepper');
                                 const numSpan = stepper?.querySelector('.qty-num');
                                 if (numSpan) numSpan.textContent = Cart.getQuantity(itemId);
@@ -2041,13 +2043,12 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  7. CHECKOUT — NO ALERTS (except Swal for form)
+            //  7. CHECKOUT — uses SweetAlert for forms (no extra animations)
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const Checkout = {
                 start() {
                     if (Cart.count === 0) {
-                        // No alert, just silently ignore
                         return;
                     }
                     this._showCustomerForm();
@@ -2302,7 +2303,7 @@
                     });
 
                     document.getElementById('cartBadge').textContent = Cart.count;
-                    console.log('✅ كشري هند — بدون أنيميشن أو تنبيهات');
+                    console.log('✅ كشري هند — يعمل بسلاسة (بدون أنيميشن أو تنبيهات)');
                 }
             };
 
