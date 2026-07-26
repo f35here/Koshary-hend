@@ -263,12 +263,19 @@
             overflow: hidden;
             background: var(--surface-container);
             flex-shrink: 0;
+            position: relative;
         }
 
         .menu-card .card-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.45s ease-in-out;
+        }
+
+        .menu-card .card-img img.loaded {
+            opacity: 1;
         }
 
         .menu-card .card-img .img-placeholder {
@@ -280,6 +287,13 @@
             font-size: 2.8rem;
             color: var(--outline);
             background: var(--surface-container);
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .menu-card .card-img img.loaded+.img-placeholder {
+            display: none !important;
         }
 
         .menu-card .card-body {
@@ -408,7 +422,6 @@
         }
 
         .menu-card .add-btn .btn-icon {
-            font-size: 0.75rem;
             color: #ffffff;
         }
 
@@ -2005,7 +2018,92 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  5. MENU
+            //  5. LAZY LOADER (Intersection Observer)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+            const LazyLoader = {
+                _observer: null,
+                _queue: [],
+
+                init() {
+                    if (!('IntersectionObserver' in window)) {
+                        // Fallback: load all images immediately
+                        return;
+                    }
+                    this._observer = new IntersectionObserver((entries) => {
+                        for (const entry of entries) {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                const dataSrc = img.getAttribute('data-src');
+                                if (dataSrc) {
+                                    img.src = dataSrc;
+                                    img.removeAttribute('data-src');
+                                    img.addEventListener('load', () => {
+                                        img.classList.add('loaded');
+                                    });
+                                    img.addEventListener('error', () => {
+                                        img.style.display = 'none';
+                                        const placeholder = img.nextElementSibling;
+                                        if (placeholder && placeholder.classList.contains(
+                                                'img-placeholder')) {
+                                            placeholder.style.display = 'flex';
+                                        }
+                                    });
+                                }
+                                this._observer.unobserve(img);
+                            }
+                        }
+                    }, {
+                        rootMargin: '100px 0px 100px 0px',
+                        threshold: 0.01
+                    });
+                    this._queue = [];
+                },
+
+                observe(img) {
+                    if (!img) return;
+                    if (this._observer) {
+                        this._observer.observe(img);
+                    } else {
+                        // fallback: load immediately
+                        const dataSrc = img.getAttribute('data-src');
+                        if (dataSrc) {
+                            img.src = dataSrc;
+                            img.removeAttribute('data-src');
+                            img.addEventListener('load', () => {
+                                img.classList.add('loaded');
+                            });
+                            img.addEventListener('error', () => {
+                                img.style.display = 'none';
+                                const placeholder = img.nextElementSibling;
+                                if (placeholder && placeholder.classList.contains('img-placeholder')) {
+                                    placeholder.style.display = 'flex';
+                                }
+                            });
+                        }
+                    }
+                },
+
+                // Call when new images are added to the DOM
+                refresh(container) {
+                    if (!container) return;
+                    const imgs = container.querySelectorAll('img[data-src]');
+                    for (const img of imgs) {
+                        this.observe(img);
+                    }
+                },
+
+                // Observe all images with data-src in the document
+                observeAll() {
+                    const imgs = document.querySelectorAll('img[data-src]');
+                    for (const img of imgs) {
+                        this.observe(img);
+                    }
+                }
+            };
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            //  6. MENU
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const MENU_DATA = {
@@ -2018,12 +2116,14 @@
                     { name: "كشري أطفال", price: 25, img: "images/KosharySada/koshary-atfal.png", desc: "حجم أطفال" }
                 ],
                 "كشري كبدة": [
-                    { name: "كشري جامبو", price: 90, img: "images/KosharyKebda/koshary-kebda-gambo.png",desc: "حجم جامبو" },
-                    { name: "كشري كبير", price: 80, img: "images/KosharyKebda/koshary-kebda-kbeer.png",desc: "حجم كبير" },
-                    { name: "كشري وسط", price: 70, img: "images/KosharyKebda/koshary-kebda-wast.png",desc: "حجم وسط" },
-                    { name: " هند", price: 60, img: "images/KosharyKebda/koshary-kebda-hend.png",desc: " هند" },
-                    { name: "كشري صغير", price: 55, img: "images/KosharyKebda/koshary-kebda-soghayar.png",desc: "حجم صغير" },
-                    { name: "كشري اطفال", price: 50, img: "images/KosharyKebda/koshary-kebda-atfal.png",desc: "حجم اطفال" }
+                    { name: "كشري جامبو", price: 90, img: "images/KosharyKebda/koshary-kebda-gambo.png", desc: "حجم جامبو" },
+                    { name: "كشري كبير", price: 80, img: "images/KosharyKebda/koshary-kebda-kbeer.png", desc: "حجم كبير" },
+                    { name: "كشري وسط", price: 70, img: "images/KosharyKebda/koshary-kebda-wast.png", desc: "حجم وسط" },
+                    { name: " هند", price: 60, img: "images/KosharyKebda/koshary-kebda-hend.png", desc: " هند" },
+                    { name: "كشري صغير", price: 55, img: "images/KosharyKebda/koshary-kebda-soghayar.png",
+                    desc: "حجم صغير" },
+                    { name: "كشري اطفال", price: 50, img: "images/KosharyKebda/koshary-kebda-atfal.png",
+                    desc: "حجم اطفال" }
                 ],
                 "طواجن عادي": [
                     { name: "فراخ", price: 40, img: "images/Tawajen3adi/tagen-farakh-3ady.png", desc: "طاجن فراخ" },
@@ -2050,10 +2150,10 @@
                     { name: "مهلبية", price: 20, img: "images/El7elo/mahalabya.png", desc: "مهلبية" }
                 ],
                 "المشروبات": [
-                    { name: "كولا  ", price: 15, img: "images/Drinks/kola.png", desc: " V7 او  pepsi" },
+                    { name: "كولا  ", price: 15, img: "images/Drinks/kola.PNG", desc: " V7 او  pepsi" },
                     { name: "بيبسي", price: 15, img: "images/Drinks/maxi.png", desc: "ماكسي" },
                     { name: "مياه صغيرة", price: 7, img: "images/Drinks/maya-soghayara.png", desc: "مياه صغيرة" },
-                    { name: "مياه كبيرة", price: 10, img: "images/Drinks/maya-kebeera.png", desc: "مياه كبيرة" }
+                    { name: "مياه كبيرة", price: 10, img: "images/Drinks/maya-kebeera.PNG", desc: "مياه كبيرة" }
                 ],
                 "الإضافات": [
                     { name: "عيش توست", price: 10, img: "images/additions/chips-toast.png", desc: "عيش توست" },
@@ -2098,6 +2198,7 @@
                 init(containerId, navId) {
                     this._container = document.getElementById(containerId);
                     this._navContainer = document.getElementById(navId);
+                    LazyLoader.init();
                     this.renderNav();
                     this.render();
                 },
@@ -2153,8 +2254,8 @@
                         return `
                                 <div class="menu-card" role="listitem">
                                     <div class="card-img">
-                                        <img src="${imgSrc}" alt="${UI.escape(item.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                                        <div class="img-placeholder" style="display:none;"><i class="fas fa-utensils" aria-hidden="true"></i></div>
+                                        <img data-src="${imgSrc}" alt="${UI.escape(item.name)}" loading="lazy" />
+                                        <div class="img-placeholder"><i class="fas fa-utensils" aria-hidden="true"></i></div>
                                     </div>
                                     <div class="card-body">
                                         <div class="card-top">
@@ -2184,6 +2285,9 @@
                                 </div>
                             `;
                     }).join('');
+
+                    // ── Lazy load images ──
+                    LazyLoader.refresh(grid);
 
                     // ── Bind stepper events ──
                     grid.querySelectorAll('.qty-stepper').forEach(stepper => {
@@ -2267,7 +2371,7 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  6. MODAL
+            //  7. MODAL
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const Modal = {
@@ -2414,7 +2518,7 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  7. CHECKOUT — with Two-Level Category Dropdown
+            //  8. CHECKOUT — with Two-Level Category Dropdown
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const Checkout = {
@@ -2430,7 +2534,6 @@
                     // Build the two-level dropdown HTML
                     let categoriesHtml = '';
                     for (const [key, cat] of Object.entries(DELIVERY_DATA)) {
-                        const isInside = key === 'inside';
                         const badgeClass = cat.badgeClass;
 
                         let locsHtml = '';
@@ -2750,7 +2853,7 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  8. APP
+            //  9. APP
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const App = {
@@ -2830,7 +2933,11 @@
                     });
 
                     document.getElementById('cartBadge').textContent = Cart.count;
-                    console.log('✅ كشري هند — دروب داون بطبقتين يعمل بسلاسة');
+
+                    // ── Observe any remaining images after initial load ──
+                    setTimeout(() => LazyLoader.observeAll(), 200);
+
+                    console.log('✅ كشري هند — lazy loading + دروب داون بطبقتين يعمل بسلاسة');
                 }
             };
 
