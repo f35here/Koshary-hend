@@ -894,7 +894,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           CHECKOUT FORM — TWO-LEVEL DROPDOWN
+           CHECKOUT FORM
            ═══════════════════════════════════════════════════════════════ */
         .checkout-form-group {
             text-align: right;
@@ -941,259 +941,20 @@
             min-height: 44px;
         }
 
-        /* ── Two-Level Area Dropdown ── */
-        .area-dropdown-wrapper {
-            position: relative;
-            width: 100%;
-            user-select: none;
-        }
-
-        .area-dropdown-trigger {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid var(--outline-variant);
-            border-radius: 10px;
-            background: var(--surface-container-lowest);
-            font-size: 0.85rem;
-            font-family: var(--font-body);
-            color: var(--on-surface);
-            text-align: right;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            min-height: 48px;
-            transition: border-color 0.15s ease;
-            cursor: pointer;
-        }
-
-        .area-dropdown-trigger:hover {
-            border-color: var(--brand-primary);
-        }
-
-        .area-dropdown-trigger .trigger-text {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-        }
-
-        .area-dropdown-trigger .trigger-text .loc-icon {
-            color: var(--brand-primary);
-            font-size: 0.9rem;
-        }
-
-        .area-dropdown-trigger .trigger-text .loc-name {
-            font-weight: 600;
-        }
-
-        .area-dropdown-trigger .trigger-text .loc-fee {
-            background: linear-gradient(135deg, #fdc003, #fdd003);
-            color: #7a5a00;
-            font-weight: 700;
-            font-size: 0.7rem;
-            padding: 2px 10px;
-            border-radius: 9999px;
-            white-space: nowrap;
-        }
-
-        .area-dropdown-trigger .trigger-arrow {
-            color: var(--on-surface-variant);
-            font-size: 0.8rem;
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-        }
-
-        .area-dropdown-trigger .trigger-arrow.open {
-            transform: rotate(180deg);
-        }
-
-        .area-dropdown-panel {
-            display: none;
-            position: absolute;
-            top: calc(100% + 6px);
-            right: 0;
-            left: 0;
-            background: var(--surface-container-lowest);
-            border: 2px solid var(--outline-variant);
-            border-radius: 12px;
-            box-shadow: var(--shadow-dropdown);
-            max-height: 320px;
-            overflow-y: auto;
-            z-index: 50;
-            padding: 6px 0;
-        }
-
-        .area-dropdown-panel.open {
-            display: block;
-        }
-
-        .area-dropdown-panel::-webkit-scrollbar {
-            width: 4px;
-        }
-        .area-dropdown-panel::-webkit-scrollbar-thumb {
-            background: var(--brand-primary);
-            border-radius: 10px;
-        }
-
-        /* ── Category Item (first level) ── */
-        .area-category-item {
-            padding: 10px 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: background 0.1s ease;
-            border-radius: 6px;
-            margin: 2px 4px;
-            border-bottom: 1px solid var(--outline-variant);
-        }
-
-        .area-category-item:last-child {
-            border-bottom: none;
-        }
-
-        .area-category-item:hover {
-            background: var(--surface-container-low);
-        }
-
-        .area-category-item .cat-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--on-surface);
-        }
-
-        .area-category-item .cat-info i {
-            color: var(--brand-primary);
-            font-size: 0.9rem;
-        }
-
-        .area-category-item .cat-badge {
-            font-size: 0.55rem;
-            padding: 0 10px;
-            border-radius: 9999px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .area-category-item .cat-badge.inside {
-            background: var(--brand-tertiary);
-        }
-
-        .area-category-item .cat-badge.outside {
-            background: var(--brand-primary-dark);
-        }
-
-        .area-category-item .cat-arrow {
-            color: var(--on-surface-variant);
-            font-size: 0.7rem;
-            transition: transform 0.2s ease;
-        }
-
-        .area-category-item .cat-arrow.expanded {
-            transform: rotate(180deg);
-        }
-
-        /* ── Locations Container (second level) ── */
-        .area-locations-container {
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.3s ease;
-            padding-right: 12px;
-        }
-
-        .area-locations-container.open {
-            max-height: 500px;
-        }
-
-        .area-location-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px 14px 6px 10px;
-            cursor: pointer;
-            transition: background 0.1s ease;
-            border-radius: 6px;
-            margin: 1px 0;
-        }
-
-        .area-location-item:hover {
-            background: var(--surface-container-low);
-        }
-
-        .area-location-item.selected {
-            background: var(--surface-container-low);
-            border-right: 3px solid var(--brand-primary);
-        }
-
-        .area-location-item .loc-item-name {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--on-surface);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .area-location-item .loc-item-name .check-icon {
-            color: var(--brand-tertiary);
-            font-size: 0.7rem;
-        }
-
-        .area-location-item .loc-item-fee {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--brand-primary);
-            background: var(--surface-container-low);
-            padding: 1px 10px;
-            border-radius: 9999px;
-            border: 1px solid var(--outline-variant);
-        }
-
-        .area-location-item .loc-item-fee.gold {
-            background: linear-gradient(135deg, #fdc003, #fdd003);
-            color: #7a5a00;
-            border-color: var(--brand-secondary);
-        }
-
-        .area-dropdown-panel .no-results {
-            padding: 16px;
-            text-align: center;
-            color: var(--on-surface-variant);
-            font-size: 0.8rem;
-        }
-
-        /* ── Fee Preview ── */
-        .fee-preview {
+        .fee-message {
             margin-top: 8px;
-            padding: 8px 14px;
-            background: linear-gradient(135deg, var(--surface-container-low), var(--surface-container));
+            padding: 10px 14px;
+            background: var(--surface-container-low);
             border-radius: 10px;
             border: 1px solid var(--outline-variant);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             font-size: 0.8rem;
             color: var(--on-surface-variant);
+            text-align: center;
         }
 
-        .fee-preview .fee-amount {
-            font-family: var(--font-headline);
-            font-weight: 800;
+        .fee-message i {
             color: var(--brand-primary);
-            font-size: 1rem;
-        }
-
-        .fee-preview .fee-amount .fee-num {
-            background: var(--brand-primary);
-            color: #ffffff;
-            padding: 0 12px;
-            border-radius: 9999px;
-            font-size: 0.85rem;
+            margin-left: 6px;
         }
 
         .order-summary-box {
@@ -1477,25 +1238,9 @@
                 padding: 3px 12px;
                 min-height: 28px;
             }
-            .area-dropdown-trigger {
-                font-size: 0.8rem;
+            .fee-message {
+                font-size: 0.75rem;
                 padding: 8px 12px;
-                min-height: 42px;
-            }
-            .area-category-item {
-                padding: 8px 10px;
-                font-size: 0.8rem;
-            }
-            .area-location-item {
-                padding: 5px 10px 5px 8px;
-                font-size: 0.75rem;
-            }
-            .area-dropdown-panel {
-                max-height: 240px;
-            }
-            .fee-preview {
-                font-size: 0.75rem;
-                padding: 6px 12px;
             }
         }
 
@@ -1598,17 +1343,9 @@
             .cart-total {
                 font-size: 0.9rem;
             }
-            .area-category-item {
-                padding: 6px 8px;
-                font-size: 0.75rem;
-            }
-            .area-location-item {
-                padding: 4px 8px 4px 6px;
-                font-size: 0.7rem;
-            }
-            .area-location-item .loc-item-fee {
-                font-size: 0.6rem;
-                padding: 0 8px;
+            .fee-message {
+                font-size: 0.65rem;
+                padding: 6px 10px;
             }
         }
 
@@ -1719,7 +1456,7 @@
     <nav class="bottom-nav" id="bottomNav" role="tablist" aria-label="تصنيفات المنيو"></nav>
 
     <!-- ═══════════════════════════════════════════════════════════════
-    LOCATION POPUP
+    LOCATION POPUP (Branches)
     ═══════════════════════════════════════════════════════════════ -->
     <div class="location-modal-overlay" id="locationModal" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
         <div class="location-modal-card">
@@ -1772,119 +1509,26 @@
     </footer>
 
     <!-- ═══════════════════════════════════════════════════════════════
-    JAVASCRIPT — COMPLETE APP
+    JAVASCRIPT — COMPLETE APP (without delivery areas)
     ═══════════════════════════════════════════════════════════════ -->
     <script>
         (function app() {
             'use strict';
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  1. DATA — DELIVERY AREAS (2 Categories)
+            //  1. DATA — only branch locations (no delivery areas)
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-            const DELIVERY_DATA = {
-                inside: {
-                    label: 'داخل البلد',
-                    icon: 'fa-city',
-                    badge: 'داخلي',
-                    badgeClass: 'inside',
-                    locations: [
-                        { id: 1, name: 'سخا', fee: 10 },
-                        { id: 2, name: 'القرضا', fee: 12 },
-                        { id: 3, name: 'الرضا', fee: 15 },
-                        { id: 4, name: 'أولاد بهاء عمرية', fee: 8 },
-                        { id: 5, name: 'مستت الجامعة', fee: 8 },
-                        { id: 6, name: 'منشية ناصر', fee: 8 },
-                        { id: 7, name: 'الكبري العلوي', fee: 8 },
-                        { id: 8, name: 'كوبري عثمان', fee: 35 },
-                        { id: 9, name: 'شنو', fee: 40 },
-                        { id: 10, name: 'المنشية الكبيرة', fee: 50 },
-                        { id: 11, name: 'الشيل أوت', fee: 15 },
-                        { id: 12, name: 'أبو عمر', fee: 15 },
-                        { id: 13, name: 'معرض الملك', fee: 10 },
-                        { id: 14, name: 'معرض السبع', fee: 8 },
-                        { id: 15, name: 'قاعة الجوهرة', fee: 15 },
-                        { id: 16, name: 'النسر', fee: 15 },
-                        { id: 17, name: 'جرايا', fee: 20 },
-                        { id: 18, name: 'النظارة', fee: 25 },
-                        { id: 19, name: 'سيدي نصر', fee: 30 },
-                        { id: 20, name: 'عزبة السرو', fee: 20 },
-                        { id: 21, name: 'سخافة', fee: 25 },
-                        { id: 22, name: 'الشمارقة', fee: 40 },
-                        { id: 23, name: 'دقميس', fee: 60 },
-                        { id: 24, name: 'عزبة الأخماس', fee: 40 },
-                        { id: 25, name: 'الخادمية', fee: 60 },
-                        { id: 26, name: 'العسكري دولي المحلة', fee: 20 },
-                        { id: 27, name: 'معسكر الطيايفة', fee: 20 },
-                        { id: 28, name: 'الطيايفة', fee: 20 },
-                        { id: 29, name: 'عزبة خميس', fee: 25 },
-                        { id: 30, name: 'متبول', fee: 45 },
-                        { id: 31, name: 'مسير', fee: 50 },
-                        { id: 32, name: 'همام النسر', fee: 15 },
-                        { id: 33, name: 'الاتحاد سكة م علوان', fee: 40 },
-                        { id: 34, name: 'نصره', fee: 50 }
-                    ]
-                },
-                outside: {
-                    label: 'خارج البلد',
-                    icon: 'fa-globe-africa',
-                    badge: 'خارجي',
-                    badgeClass: 'outside',
-                    locations: [
-                        { id: 100, name: 'عزبة الصعايدة', fee: 15 },
-                        { id: 101, name: 'زراعة م علوان', fee: 20 },
-                        { id: 102, name: 'الطبية', fee: 25 },
-                        { id: 103, name: 'دفلت / أبو ريشة', fee: 30 },
-                        { id: 104, name: 'إدريجة هقريد', fee: 35 },
-                        { id: 105, name: 'الوزارية', fee: 50 },
-                        { id: 106, name: 'كفر عسكر', fee: 20 },
-                        { id: 107, name: 'المرابعين', fee: 40 },
-                        { id: 108, name: 'كفر المرابعين', fee: 35 },
-                        { id: 109, name: 'دقميرة', fee: 60 },
-                        { id: 110, name: 'كاش', fee: 20 },
-                        { id: 111, name: 'الفيروز', fee: 20 },
-                        { id: 112, name: 'سيف كافيه كفر المرابعين', fee: 30 },
-                        { id: 113, name: 'الحطب البراوي', fee: 25 },
-                        { id: 114, name: 'عزبة سالم والمعونة', fee: 50 },
-                        { id: 115, name: 'محل القصب', fee: 20 },
-                        { id: 116, name: 'اربيون', fee: 45 },
-                        { id: 117, name: 'حليس', fee: 30 },
-                        { id: 118, name: 'روينة', fee: 20 },
-                        { id: 119, name: 'م الديبة', fee: 50 },
-                        { id: 120, name: 'محلة موسى', fee: 30 },
-                        { id: 121, name: 'النظاف', fee: 25 },
-                        { id: 122, name: 'أمية', fee: 25 },
-                        { id: 123, name: 'الروضة', fee: 50 },
-                        { id: 124, name: 'عزبة الحارس', fee: 40 },
-                        { id: 125, name: 'الحمراوي', fee: 10 },
-                        { id: 126, name: 'القرط', fee: 15 },
-                        { id: 127, name: 'ذفرة', fee: 25 },
-                        { id: 128, name: 'كفر ذفرة', fee: 35 }
-                    ]
-                }
-            };
+            const LOCATIONS_DATA = [
+                { id: 1, name: "الفرع الاول", address: "ميدان سيدي قطب مدخل النبوي المهندس بجوار المستشفي العام",
+                    coords: "30.5700,31.5200", icon: "fa-store" },
+                { id: 2, name: "الفرع الثاني", address: "الجمعيه الاستهلاكيه بجوار المزلقان الوسطاني",
+                    coords: "30.5725,31.5225", icon: "fa-city" },
+                { id: 3, name: "الفرع الثالث", address: "دوران المصنع امام مستشفى تداوي ال٤٧", coords: "30.5675,31.5175",
+                    icon: "fa-water" }
+            ];
 
-            // ── Build flat list for quick lookup ──
-            const ALL_LOCATIONS = [];
-            for (const [key, cat] of Object.entries(DELIVERY_DATA)) {
-                for (const loc of cat.locations) {
-                    ALL_LOCATIONS.push({
-                        ...loc,
-                        category: key,
-                        categoryLabel: cat.label
-                    });
-                }
-            }
-
-            // ── Get location by id ──
-            function getLocationById(id) {
-                return ALL_LOCATIONS.find(l => l.id === id) || null;
-            }
-
-            // ── Get default location ──
-            function getDefaultLocation() {
-                return ALL_LOCATIONS[0] || { id: 1, name: 'سخا', fee: 10, category: 'inside', categoryLabel: 'داخل البلد' };
-            }
+            const WHATSAPP_PHONE = '201013706142';
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             //  2. STORAGE
@@ -2023,7 +1667,6 @@
 
             const LazyLoader = {
                 _observer: null,
-                _queue: [],
 
                 init() {
                     if (!('IntersectionObserver' in window)) {
@@ -2057,7 +1700,6 @@
                         rootMargin: '100px 0px 100px 0px',
                         threshold: 0.01
                     });
-                    this._queue = [];
                 },
 
                 observe(img) {
@@ -2084,7 +1726,6 @@
                     }
                 },
 
-                // Call when new images are added to the DOM
                 refresh(container) {
                     if (!container) return;
                     const imgs = container.querySelectorAll('img[data-src]');
@@ -2093,7 +1734,6 @@
                     }
                 },
 
-                // Observe all images with data-src in the document
                 observeAll() {
                     const imgs = document.querySelectorAll('img[data-src]');
                     for (const img of imgs) {
@@ -2150,10 +1790,10 @@
                     { name: "مهلبية", price: 20, img: "images/El7elo/mahalabya.png", desc: "مهلبية" }
                 ],
                 "المشروبات": [
-                    { name: "كولا  ", price: 15, img: "images/Drinks/kola.png", desc: " V7 او  pepsi" },
+                    { name: "كولا  ", price: 15, img: "images/Drinks/kola.PNG", desc: " V7 او  pepsi" },
                     { name: "بيبسي", price: 15, img: "images/Drinks/maxi.png", desc: "ماكسي" },
                     { name: "مياه صغيرة", price: 7, img: "images/Drinks/maya-soghayara.png", desc: "مياه صغيرة" },
-                    { name: "مياه كبيرة", price: 10, img: "images/Drinks/maya-kebeera.png", desc: "مياه كبيرة" }
+                    { name: "مياه كبيرة", price: 10, img: "images/Drinks/maya-kebeera.PNG", desc: "مياه كبيرة" }
                 ],
                 "الإضافات": [
                     { name: "عيش توست", price: 10, img: "images/additions/chips-toast.png", desc: "عيش توست" },
@@ -2177,17 +1817,6 @@
                 { id: "المشروبات" },
                 { id: "الإضافات" }
             ];
-
-            const LOCATIONS_DATA = [
-                { id: 1, name: "الفرع الاول", address: "ميدان سيدي قطب مدخل النبوي المهندس بجوار المستشفي العام",
-                    coords: "30.5700,31.5200", icon: "fa-store" },
-                { id: 2, name: "الفرع الثاني", address: "الجمعيه الاستهلاكيه بجوار المزلقان الوسطاني",
-                    coords: "30.5725,31.5225", icon: "fa-city" },
-                { id: 3, name: "الفرع الثالث", address: "دوران المصنع امام مستشفى تداوي ال٤٧", coords: "30.5675,31.5175",
-                    icon: "fa-water" }
-            ];
-
-            const WHATSAPP_PHONE = '201013706142';
 
             // ── Menu Module ──
             const Menu = {
@@ -2371,30 +2000,16 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  7. MODAL
+            //  7. MODAL (only branch locations)
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const Modal = {
                 _cartModal: null,
                 _locationModal: null,
-                _selectedLocation: getDefaultLocation(),
 
                 init() {
                     this._cartModal = document.getElementById('cartModal');
                     this._locationModal = document.getElementById('locationModal');
-                    const saved = Storage.get('koshary_hind_area');
-                    if (saved) {
-                        const loc = getLocationById(saved);
-                        if (loc) this._selectedLocation = loc;
-                    }
-                },
-
-                getSelectedLocation() { return this._selectedLocation; },
-                getDeliveryFee() { return this._selectedLocation ? this._selectedLocation.fee : 10; },
-
-                setSelectedLocation(loc) {
-                    this._selectedLocation = loc;
-                    Storage.set('koshary_hind_area', loc.id);
                 },
 
                 openCart() {
@@ -2456,12 +2071,14 @@
                     container.innerHTML = html;
 
                     const subtotal = Cart.total;
-                    const deliveryFee = this.getDeliveryFee();
-                    const grand = subtotal + deliveryFee;
+                    // No delivery fee — show message instead
                     summary.innerHTML = `
                             <div class="cart-summary-row"><span>المجموع الفرعي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
-                            <div class="cart-summary-row"><span>رسوم التوصيل (${this._selectedLocation ? this._selectedLocation.name : 'سخا'})</span><span>${deliveryFee.toFixed(2)} ج.م</span></div>
-                            <div class="cart-total"><span>الإجمالي</span><span>${grand.toFixed(2)} ج.م</span></div>
+                            <div class="cart-summary-row" style="font-weight:600; color:var(--brand-primary);">
+                                <span>🚚 رسوم التوصيل</span>
+                                <span>سيتم التواصل معك الان لتحديد رسوم الدليفري</span>
+                            </div>
+                            <div class="cart-total"><span>الإجمالي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
                         `;
 
                     container.querySelectorAll('.cq-decr').forEach(btn => {
@@ -2518,7 +2135,7 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  8. CHECKOUT — with Two-Level Category Dropdown
+            //  8. CHECKOUT (no delivery area)
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const Checkout = {
@@ -2529,46 +2146,6 @@
 
                 _showCustomerForm(prefill) {
                     prefill = prefill || {};
-                    const currentLoc = Modal.getSelectedLocation();
-
-                    // Build the two-level dropdown HTML
-                    let categoriesHtml = '';
-                    for (const [key, cat] of Object.entries(DELIVERY_DATA)) {
-                        const badgeClass = cat.badgeClass;
-
-                        let locsHtml = '';
-                        for (const loc of cat.locations) {
-                            const isSelected = currentLoc && currentLoc.id === loc.id;
-                            locsHtml += `
-                                <div class="area-location-item ${isSelected ? 'selected' : ''}" data-loc-id="${loc.id}" data-loc-name="${UI.escape(loc.name)}" data-loc-fee="${loc.fee}" data-category="${key}">
-                                    <span class="loc-item-name">
-                                        ${isSelected ? '<i class="fas fa-check-circle check-icon" aria-hidden="true"></i>' : ''}
-                                        ${UI.escape(loc.name)}
-                                    </span>
-                                    <span class="loc-item-fee ${isSelected ? 'gold' : ''}">${loc.fee} ج.م</span>
-                                </div>
-                            `;
-                        }
-
-                        categoriesHtml += `
-                            <div class="area-category-item" data-category="${key}">
-                                <span class="cat-info">
-                                    <i class="fas ${cat.icon}" aria-hidden="true"></i>
-                                    ${cat.label}
-                                    <span class="cat-badge ${badgeClass}">${cat.badge}</span>
-                                </span>
-                                <span class="cat-arrow"><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
-                            </div>
-                            <div class="area-locations-container" data-category="${key}">
-                                ${locsHtml}
-                            </div>
-                        `;
-                    }
-
-                    // Hidden select for form submission
-                    const areaOptions = ALL_LOCATIONS.map(l =>
-                        `<option value="${l.id}" ${currentLoc && currentLoc.id === l.id ? 'selected' : ''}>${l.name} (${l.fee} ج.م)</option>`
-                    ).join('');
 
                     Swal.fire({
                         title: '📝 بيانات التوصيل',
@@ -2586,35 +2163,10 @@
                                         <label><i class="fas fa-map-pin" aria-hidden="true"></i> عنوان التوصيل</label>
                                         <textarea id="custAddress" rows="2" placeholder="اكتب عنوانك بالتفصيل" autocomplete="street-address">${UI.escape(prefill.address || '')}</textarea>
                                     </div>
-
-                                    <!-- ===== TWO-LEVEL AREA DROPDOWN ===== -->
-                                    <div class="checkout-form-group">
-                                        <label><i class="fas fa-location-dot" aria-hidden="true"></i> اختر منطقتك</label>
-                                        <div class="area-dropdown-wrapper" id="areaDropdownWrapper">
-                                            <!-- Trigger -->
-                                            <div class="area-dropdown-trigger" id="areaDropdownTrigger">
-                                                <span class="trigger-text">
-                                                    <i class="fas fa-map-pin loc-icon" aria-hidden="true"></i>
-                                                    <span class="loc-name">${currentLoc ? UI.escape(currentLoc.name) : 'اختر المنطقة'}</span>
-                                                    <span class="loc-fee">${currentLoc ? currentLoc.fee + ' ج.م' : ''}</span>
-                                                </span>
-                                                <span class="trigger-arrow" id="dropdownArrow"><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
-                                            </div>
-                                            <!-- Panel -->
-                                            <div class="area-dropdown-panel" id="areaDropdownPanel">
-                                                ${categoriesHtml}
-                                            </div>
-                                        </div>
-                                        <!-- Fee Preview -->
-                                        <div class="fee-preview" id="feePreviewArea">
-                                            <span>💰 رسوم التوصيل</span>
-                                            <span class="fee-amount"><span class="fee-num" id="feeDisplayNum">${currentLoc ? currentLoc.fee : 10}</span> ج.م</span>
-                                        </div>
+                                    <div class="fee-message">
+                                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                        سيتم التواصل معك الان لتحديد رسوم الدليفري
                                     </div>
-
-                                    <select id="custAreaHidden" style="display:none;">
-                                        ${areaOptions}
-                                    </select>
                                 </div>
                             `,
                         showCancelButton: true,
@@ -2624,129 +2176,12 @@
                         confirmButtonColor: '#b81a20',
                         allowOutsideClick: false,
                         didOpen: () => {
-                            // ── Setup two-level dropdown ──
-                            const trigger = document.getElementById('areaDropdownTrigger');
-                            const panel = document.getElementById('areaDropdownPanel');
-                            const arrow = document.getElementById('dropdownArrow');
-                            const feeDisplay = document.getElementById('feeDisplayNum');
-                            const wrapper = document.getElementById('areaDropdownWrapper');
-
-                            // Toggle dropdown
-                            trigger.addEventListener('click', (e) => {
-                                e.stopPropagation();
-                                const isOpen = panel.classList.contains('open');
-                                panel.classList.toggle('open');
-                                if (arrow) arrow.classList.toggle('open');
-                            });
-
-                            // Close dropdown when clicking outside
-                            document.addEventListener('click', (e) => {
-                                if (wrapper && !wrapper.contains(e.target)) {
-                                    panel.classList.remove('open');
-                                    if (arrow) arrow.classList.remove('open');
-                                }
-                            });
-
-                            // ── Category click: toggle locations ──
-                            panel.querySelectorAll('.area-category-item').forEach(catItem => {
-                                catItem.addEventListener('click', () => {
-                                    const category = catItem.getAttribute('data-category');
-                                    const container = panel.querySelector(
-                                        `.area-locations-container[data-category="${category}"]`);
-                                    const catArrow = catItem.querySelector('.cat-arrow');
-
-                                    // Close all other categories
-                                    panel.querySelectorAll('.area-locations-container').forEach(cont => {
-                                        if (cont.getAttribute('data-category') !== category) {
-                                            cont.classList.remove('open');
-                                            const otherCat = panel.querySelector(
-                                                `.area-category-item[data-category="${cont.getAttribute('data-category')}"]`
-                                                );
-                                            if (otherCat) {
-                                                otherCat.querySelector('.cat-arrow')?.classList.remove(
-                                                'expanded');
-                                            }
-                                        }
-                                    });
-
-                                    // Toggle this category
-                                    if (container) {
-                                        container.classList.toggle('open');
-                                        if (catArrow) catArrow.classList.toggle('expanded');
-                                    }
-                                });
-                            });
-
-                            // ── Location item click ──
-                            panel.querySelectorAll('.area-location-item').forEach(item => {
-                                item.addEventListener('click', (e) => {
-                                    e.stopPropagation();
-                                    const locId = parseInt(item.getAttribute('data-loc-id'));
-                                    const locName = item.getAttribute('data-loc-name');
-                                    const locFee = parseInt(item.getAttribute('data-loc-fee'));
-
-                                    // Update selected state
-                                    panel.querySelectorAll('.area-location-item').forEach(el => el
-                                        .classList.remove('selected'));
-                                    item.classList.add('selected');
-
-                                    // Update trigger text
-                                    const triggerText = trigger.querySelector('.trigger-text');
-                                    const nameSpan = triggerText.querySelector('.loc-name');
-                                    const feeSpan = triggerText.querySelector('.loc-fee');
-                                    if (nameSpan) nameSpan.textContent = locName;
-                                    if (feeSpan) feeSpan.textContent = locFee + ' ج.م';
-
-                                    // Update fee display
-                                    if (feeDisplay) feeDisplay.textContent = locFee;
-
-                                    // Update selected location in Modal
-                                    const loc = getLocationById(locId);
-                                    if (loc) {
-                                        Modal.setSelectedLocation(loc);
-                                        const hiddenSelect = document.getElementById('custAreaHidden');
-                                        if (hiddenSelect) {
-                                            hiddenSelect.value = locId;
-                                        }
-                                    }
-
-                                    // Close dropdown
-                                    panel.classList.remove('open');
-                                    if (arrow) arrow.classList.remove('open');
-
-                                    // Close all category containers
-                                    panel.querySelectorAll('.area-locations-container').forEach(cont => cont
-                                        .classList.remove('open'));
-                                    panel.querySelectorAll('.area-category-item .cat-arrow').forEach(a => a
-                                        .classList.remove('expanded'));
-                                });
-                            });
-
-                            // ── Auto-expand the category of the current selection ──
-                            if (currentLoc) {
-                                const catKey = currentLoc.category;
-                                const container = panel.querySelector(
-                                    `.area-locations-container[data-category="${catKey}"]`);
-                                const catItem = panel.querySelector(
-                                    `.area-category-item[data-category="${catKey}"]`);
-                                if (container && catItem) {
-                                    container.classList.add('open');
-                                    catItem.querySelector('.cat-arrow')?.classList.add('expanded');
-                                }
-                            }
-
-                            // ── Focus first input ──
                             setTimeout(() => document.getElementById('custName')?.focus(), 150);
                         },
                         preConfirm: () => {
                             const name = document.getElementById('custName')?.value?.trim();
                             const phone = document.getElementById('custPhone')?.value?.trim();
                             const address = document.getElementById('custAddress')?.value?.trim();
-
-                            const hiddenSelect = document.getElementById('custAreaHidden');
-                            let areaId = hiddenSelect ? parseInt(hiddenSelect.value) : Modal.getSelectedLocation()
-                                .id;
-                            const area = getLocationById(areaId) || Modal.getSelectedLocation();
 
                             if (!name) { Swal.showValidationMessage('يرجى إدخال الاسم'); return false; }
                             if (!phone) { Swal.showValidationMessage('يرجى إدخال رقم الجوال'); return false; }
@@ -2757,21 +2192,18 @@
                                 return false;
                             }
 
-                            if (area) Modal.setSelectedLocation(area);
-                            return { name, phone: cleanPhone, address, area };
+                            return { name, phone: cleanPhone, address };
                         }
                     }).then((result) => {
                         if (result.isConfirmed && result.value) {
-                            const { name, phone, address, area } = result.value;
-                            this._showOrderReview(name, phone, address, area);
+                            const { name, phone, address } = result.value;
+                            this._showOrderReview(name, phone, address);
                         }
                     });
                 },
 
-                _showOrderReview(name, phone, address, area) {
+                _showOrderReview(name, phone, address) {
                     const subtotal = Cart.total;
-                    const deliveryFee = area ? area.fee : Modal.getDeliveryFee();
-                    const grandTotal = subtotal + deliveryFee;
 
                     const rowsHtml = Cart.items.map(item => `
                             <div class="os-row">
@@ -2787,13 +2219,11 @@
                                     <div><i class="fas fa-user" style="color:var(--brand-primary);"></i> ${UI.escape(name)}</div>
                                     <div><i class="fas fa-phone" style="color:var(--brand-primary);"></i> ${UI.escape(phone)}</div>
                                     <div><i class="fas fa-map-pin" style="color:var(--brand-primary);"></i> ${UI.escape(address)}</div>
-                                    <div><i class="fas fa-location-dot" style="color:var(--brand-tertiary);"></i> ${area ? UI.escape(area.name) : 'غير محدد'} — <strong>${deliveryFee} ج.م</strong></div>
+                                    <div style="margin-top:4px;color:var(--brand-primary);font-weight:600;"><i class="fas fa-truck" style="color:var(--brand-tertiary);"></i> سيتم التواصل معك لتحديد رسوم التوصيل</div>
                                 </div>
                                 <div class="order-summary-box">
                                     ${rowsHtml}
-                                    <div class="os-row border-top"><span>المجموع الفرعي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
-                                    <div class="os-row"><span>رسوم التوصيل (${area ? UI.escape(area.name) : ''})</span><span>${deliveryFee.toFixed(2)} ج.م</span></div>
-                                    <div class="os-row total"><span>الإجمالي</span><span>${grandTotal.toFixed(2)} ج.م</span></div>
+                                    <div class="os-row total"><span>الإجمالي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
                                 </div>
                                 <div style="font-size:0.65rem;color:var(--on-surface-variant);text-align:center;margin-top:4px;">
                                     <i class="fas fa-whatsapp" style="color:#25D366;"></i> سيتم إرسال الطلب عبر واتساب
@@ -2807,17 +2237,15 @@
                         allowOutsideClick: false
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            this._sendOrder(name, phone, address, area);
+                            this._sendOrder(name, phone, address);
                         } else if (result.dismiss === Swal.DismissReason.cancel) {
                             this._showCustomerForm({ name, phone, address });
                         }
                     });
                 },
 
-                _sendOrder(name, phone, address, area) {
+                _sendOrder(name, phone, address) {
                     const subtotal = Cart.total;
-                    const deliveryFee = area ? area.fee : Modal.getDeliveryFee();
-                    const grandTotal = subtotal + deliveryFee;
 
                     const orderLines = Cart.items.map(item =>
                         `• ${item.name} × ${item.quantity} = ${(item.price * item.quantity).toFixed(2)} ج.م`
@@ -2829,14 +2257,12 @@
                         `👤 *الاسم:* ${name}`,
                         `📱 *الجوال:* ${phone}`,
                         `📍 *العنوان:* ${address}`,
-                        `📍 *المنطقة:* ${area ? area.name : 'غير محدد'}`,
                         '━━━━━━━━━━━━━━━━━━━━━',
                         '📋 *تفاصيل الطلب:*',
                         orderLines,
                         '━━━━━━━━━━━━━━━━━━━━━',
                         `💰 *إجمالي الطلب:* ${subtotal.toFixed(2)} ج.م`,
-                        `🚚 *رسوم التوصيل (${area ? area.name : ''}):* ${deliveryFee.toFixed(2)} ج.م`,
-                        `💎 *الإجمالي النهائي:* ${grandTotal.toFixed(2)} ج.م`,
+                        '🚚 *رسوم التوصيل:* سيتم التواصل معك لتحديدها',
                         '━━━━━━━━━━━━━━━━━━━━━',
                         '🌟 شكراً لثقتكم بكشري هند!'
                     ];
@@ -2933,11 +2359,8 @@
                     });
 
                     document.getElementById('cartBadge').textContent = Cart.count;
-
-                    // ── Observe any remaining images after initial load ──
                     setTimeout(() => LazyLoader.observeAll(), 200);
-
-                    console.log('✅ كشري هند — lazy loading + دروب داون بطبقتين يعمل بسلاسة');
+                    console.log('✅ كشري هند — تم إزالة مناطق التوصيل وتم عرض رسالة ثابتة للدليفري');
                 }
             };
 
