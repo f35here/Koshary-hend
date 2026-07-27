@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>كشري و حلواني هند</title>
+    <title>كشري هند</title>
     <link rel="icon" type="image/jpeg" href="./images/logo.jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -11,9 +11,7 @@
     </script>
 
     <style>
-        /* ═══════════════════════════════════════════════════════════════
-           RESET & VARIABLES
-           ═══════════════════════════════════════════════════════════════ */
+        /* ── جميع الـ styles كما هي بدون تغيير ── */
         * {
             margin: 0;
             padding: 0;
@@ -656,7 +654,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           CART MODAL — تصميم بريميوم جديد
+           CART MODAL
            ═══════════════════════════════════════════════════════════════ */
         .modal-overlay {
             display: none;
@@ -1266,7 +1264,6 @@
             .location-card-item .loc-info h4 {
                 font-size: 0.75rem;
             }
-            /* تحسينات استجابة للـ Cart Modal الجديد */
             .modal-card {
                 padding: 16px 14px 14px;
                 border-radius: 20px;
@@ -1522,7 +1519,7 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════
-    CART MODAL — تصميم بريميوم جديد
+    CART MODAL
     ═══════════════════════════════════════════════════════════════ -->
     <div class="modal-overlay" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle">
         <div class="modal-card">
@@ -1560,14 +1557,14 @@
     </footer>
 
     <!-- ═══════════════════════════════════════════════════════════════
-    JAVASCRIPT — COMPLETE APP (without delivery areas)
+    JAVASCRIPT — COMPLETE APP (with fix for image flicker)
     ═══════════════════════════════════════════════════════════════ -->
     <script>
         (function app() {
             'use strict';
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  1. DATA — only branch locations (no delivery areas)
+            //  1. DATA
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const LOCATIONS_DATA = [
@@ -1690,6 +1687,10 @@
                 },
                 _notify() {
                     this._listeners.forEach(fn => fn(this._items.slice()));
+                    // تحديث جزئي دون إعادة رسم كامل
+                    if (typeof Menu !== 'undefined' && Menu.updateItems) {
+                        Menu.updateItems();
+                    }
                 }
             };
 
@@ -1721,7 +1722,6 @@
 
                 init() {
                     if (!('IntersectionObserver' in window)) {
-                        // Fallback: load all images immediately
                         return;
                     }
                     this._observer = new IntersectionObserver((entries) => {
@@ -1758,7 +1758,6 @@
                     if (this._observer) {
                         this._observer.observe(img);
                     } else {
-                        // fallback: load immediately
                         const dataSrc = img.getAttribute('data-src');
                         if (dataSrc) {
                             img.src = dataSrc;
@@ -2038,15 +2037,30 @@
                             btn.querySelector('.btn-label').textContent = 'في السلة';
                         });
                     });
+                },
 
-                    // ── Re-render on cart change ──
-                    const origNotify = Cart._notify;
-                    Cart._notify = function() {
-                        origNotify.call(this);
-                        if (grid && grid.isConnected) {
-                            Menu.render();
+                // ── NEW: تحديث الكميات فقط دون إعادة رسم الـ DOM ──
+                updateItems() {
+                    const grid = this._container;
+                    if (!grid) return;
+                    grid.querySelectorAll('.menu-card').forEach(card => {
+                        const addBtn = card.querySelector('.add-btn');
+                        if (!addBtn) return;
+                        const name = addBtn.getAttribute('data-name');
+                        const category = addBtn.getAttribute('data-cat');
+                        if (!name || !category) return;
+                        const itemId = UI.generateId(name, category);
+                        const qty = Cart.getQuantity(itemId);
+                        const numSpan = card.querySelector('.qty-num');
+                        if (numSpan) numSpan.textContent = qty;
+                        if (qty > 0) {
+                            addBtn.classList.add('added');
+                            addBtn.querySelector('.btn-label').textContent = 'في السلة';
+                        } else {
+                            addBtn.classList.remove('added');
+                            addBtn.querySelector('.btn-label').textContent = 'أضف';
                         }
-                    };
+                    });
                 }
             };
 
@@ -2122,7 +2136,6 @@
                     container.innerHTML = html;
 
                     const subtotal = Cart.total;
-                    // No delivery fee — show message instead
                     summary.innerHTML = `
                             <div class="cart-summary-row"><span>المجموع الفرعي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
                             <div class="fee-message">
@@ -2137,7 +2150,7 @@
                             const idx = parseInt(btn.getAttribute('data-idx'));
                             Cart.decrement(idx);
                             this._renderCart();
-                            Menu.render();
+                            Menu.updateItems();
                         });
                     });
                     container.querySelectorAll('.cq-incr').forEach(btn => {
@@ -2145,7 +2158,7 @@
                             const idx = parseInt(btn.getAttribute('data-idx'));
                             Cart.increment(idx);
                             this._renderCart();
-                            Menu.render();
+                            Menu.updateItems();
                         });
                     });
                     container.querySelectorAll('.cq-remove').forEach(btn => {
@@ -2153,7 +2166,7 @@
                             const idx = parseInt(btn.getAttribute('data-idx'));
                             Cart.remove(idx);
                             this._renderCart();
-                            Menu.render();
+                            Menu.updateItems();
                         });
                     });
                 },
@@ -2324,7 +2337,7 @@
 
                     Cart.clear();
                     Modal.closeCart();
-                    Menu.render();
+                    Menu.updateItems(); // تحديث جزئي بعد التفريغ
                     document.getElementById('cartBadge').textContent = '0';
                 }
             };
@@ -2344,7 +2357,8 @@
                         if (document.getElementById('cartModal')?.classList.contains('active')) {
                             Modal._renderCart();
                         }
-                        Menu.render();
+                        // تحديث جزئي بدلاً من إعادة الرسم
+                        Menu.updateItems();
                     });
 
                     document.getElementById('cartIconBtn')?.addEventListener('click', () => {
@@ -2384,7 +2398,7 @@
                             if (result.isConfirmed) {
                                 Cart.clear();
                                 Modal._renderCart();
-                                Menu.render();
+                                Menu.updateItems();
                                 document.getElementById('cartBadge').textContent = '0';
                             }
                         });
@@ -2411,7 +2425,7 @@
 
                     document.getElementById('cartBadge').textContent = Cart.count;
                     setTimeout(() => LazyLoader.observeAll(), 200);
-                    console.log('✅ كشري هند — تم إزالة مناطق التوصيل وتم عرض رسالة ثابتة للدليفري');
+                    console.log('✅ كشري هند — تم إصلاح مشكلة وميض الصور');
                 }
             };
 
