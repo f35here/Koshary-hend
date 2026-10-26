@@ -3,50 +3,83 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#8B2A20" />
     <title>كشري هند</title>
     <link rel="icon" type="image/jpeg" href="./images/logo.jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        /* ── جميع الـ styles كما هي بدون تغيير ── */
-        * {
+        /* ══════════════════════════════════════════════
+           DESIGN SYSTEM
+           ══════════════════════════════════════════════ */
+        :root {
+            /* Brand — mapped to professional palette */
+            --brand-primary: #8B2A20;
+            --brand-primary-dark: #6B1D15;
+            --brand-secondary: #A67C3A;
+            --brand-secondary-dark: #7A5A20;
+            --brand-tertiary: #2E5D3D;
+
+            /* Surfaces */
+            --surface: #FAF8F4;
+            --surface-container-lowest: #FFFFFF;
+            --surface-container-low: #F4F1EC;
+            --surface-container: #EDEAE3;
+
+            /* Text */
+            --on-surface: #1F1B18;
+            --on-surface-variant: #4A443E;
+
+            /* Lines */
+            --outline-variant: #E8E2D8;
+            --outline: #8A8179;
+
+            /* States */
+            --error: #B43C3C;
+            --error-container: #FCEDED;
+
+            /* Aliases used in inline styles */
+            --primary: #8B2A20;
+            --primary-soft: #F7E9E7;
+
+            /* Typography */
+            --font-headline: 'Cairo', sans-serif;
+            --font-body: 'Cairo', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Space Grotesk', 'Cairo', sans-serif;
+
+            /* Layout */
+            --bottom-nav-height: 68px;
+            --gutter: 20px;
+            --container-max: 1200px;
+
+            /* Radii */
+            --r-xs: 4px;
+            --r-sm: 8px;
+            --r-md: 12px;
+            --r-lg: 16px;
+            --r-pill: 999px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(31, 27, 24, 0.06), 0 1px 2px rgba(31, 27, 24, 0.04);
+            --shadow-md: 0 4px 16px rgba(31, 27, 24, 0.08);
+            --shadow-lg: 0 12px 32px rgba(31, 27, 24, 0.12);
+
+            /* Motion */
+            --t-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --t-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --t-slow: 320ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ── Reset ── */
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-        }
-
-        :root {
-            --brand-primary: #b81a20;
-            --brand-primary-dark: #8a1015;
-            --brand-secondary: #fdc003;
-            --brand-secondary-dark: #7a5a00;
-            --brand-tertiary: #11651d;
-
-            --surface: #fcf7f0;
-            --surface-container-lowest: #ffffff;
-            --surface-container-low: #f8f1e9;
-            --surface-container: #f2ebe2;
-            --on-surface: #1c1a15;
-            --on-surface-variant: #5a423e;
-            --outline-variant: #e2bcb8;
-            --outline: #8f706c;
-
-            --error: #ba1a1a;
-            --error-container: #ffdad6;
-
-            --font-headline: 'Be Vietnam Pro', sans-serif;
-            --font-body: 'Plus Jakarta Sans', sans-serif;
-
-            --bottom-nav-height: 68px;
-            --gutter: 14px;
-            --container-max: 1400px;
-
-            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
-            --shadow-dropdown: 0 12px 48px rgba(0, 0, 0, 0.12);
         }
 
         html {
@@ -62,18 +95,15 @@
             min-height: 100vh;
             min-height: 100dvh;
             overflow-x: hidden;
-            padding-bottom: calc(var(--bottom-nav-height) + 36px);
+            padding-bottom: calc(var(--bottom-nav-height) + 40px);
             line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
-        img {
-            max-width: 100%;
-            display: block;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
         button {
             font-family: inherit;
             cursor: pointer;
@@ -82,70 +112,73 @@
             background: none;
             font-size: inherit;
         }
-        input,
-        textarea,
-        select {
+        input, textarea, select {
             font-family: inherit;
             font-size: inherit;
             outline: none;
             border: none;
         }
 
+        .hidden { display: none !important; }
+
+        /* ══════════════════════════════════════════════
+           SCROLLBAR
+           ══════════════════════════════════════════════ */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--outline) transparent;
+        }
         ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+            width: 10px;
+            height: 10px;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--surface-container);
-        }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb {
-            background: var(--brand-primary);
-            border-radius: 10px;
+            background: var(--outline-variant);
+            border-radius: var(--r-pill);
+            border: 2px solid var(--surface);
         }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-primary); }
+        ::-webkit-scrollbar-corner { background: transparent; }
 
-        .hidden {
-            display: none !important;
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
+        /* ══════════════════════════════════════════════
            HEADER
-           ═══════════════════════════════════════════════════════════════ */
+           ══════════════════════════════════════════════ */
         .app-header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.92);
-            border-bottom: 2px solid var(--brand-primary);
-            padding: 4px 0;
+            background: var(--surface-container-lowest);
+            border-bottom: 1px solid var(--outline-variant);
         }
 
         .header-container {
             max-width: var(--container-max);
             margin: 0 auto;
-            padding: 2px var(--gutter);
+            padding: 14px var(--gutter);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            min-height: 52px;
+            gap: 16px;
+            min-height: 64px;
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             min-width: 0;
             flex-shrink: 1;
         }
 
         .logo-wrapper {
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             flex-shrink: 0;
-            border-radius: 9999px;
+            border-radius: 50%;
             overflow: hidden;
-            border: 2px solid var(--brand-secondary);
-            background: var(--brand-primary);
+            border: 1px solid var(--outline-variant);
+            background: var(--surface-container-low);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -157,39 +190,32 @@
             object-fit: cover;
         }
 
+        .brand-text { min-width: 0; }
         .brand-text h1 {
             font-family: var(--font-headline);
-            font-size: 1.2rem;
-            font-weight: 900;
+            font-size: 1.35rem;
+            font-weight: 700;
             color: var(--brand-primary);
-            letter-spacing: -0.03em;
-            line-height: 1.1;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .brand-text .sub {
-            font-size: 0.55rem;
-            font-weight: 600;
+            font-size: 0.72rem;
+            font-weight: 400;
             color: var(--on-surface-variant);
-            letter-spacing: 0.3px;
+            margin-top: 2px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
-
-        .brand-text .sub i {
-            color: var(--brand-secondary);
-            font-size: 0.45rem;
-        }
+        .brand-text .sub i { display: none; }
 
         .header-actions {
             display: flex;
-            gap: 4px;
+            gap: 8px;
             align-items: center;
             flex-shrink: 0;
         }
@@ -198,66 +224,86 @@
             position: relative;
             width: 42px;
             height: 42px;
-            border-radius: 9999px;
-            background: var(--surface-container-low);
-            border: 2px solid var(--outline-variant);
-            color: var(--brand-primary);
+            border-radius: 50%;
+            background: var(--surface-container-lowest);
+            border: 1px solid var(--outline-variant);
+            color: var(--on-surface-variant);
             font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
         }
-
-        .icon-btn.location-btn {
-            color: var(--brand-tertiary);
-            border-color: var(--brand-tertiary);
+        .icon-btn:hover {
+            background: var(--surface-container-low);
+            border-color: var(--outline);
+            color: var(--brand-primary);
         }
+        .icon-btn:active { transform: scale(0.96); }
+        .icon-btn:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
+        }
+        .icon-btn.location-btn { color: var(--on-surface-variant); }
 
         .cart-badge {
             position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--brand-secondary);
-            color: var(--brand-secondary-dark);
-            font-size: 0.5rem;
-            font-weight: 800;
-            width: 22px;
-            height: 22px;
-            border-radius: 9999px;
+            top: -4px;
+            right: -4px;
+            background: var(--brand-primary);
+            color: #FFFFFF;
+            font-size: 0.65rem;
+            font-weight: 600;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 5px;
+            border-radius: var(--r-pill);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: var(--font-headline);
+            font-family: var(--font-mono);
             border: 2px solid var(--surface-container-lowest);
+            line-height: 1;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           MENU
-           ═══════════════════════════════════════════════════════════════ */
+        /* ══════════════════════════════════════════════
+           MENU GRID
+           ══════════════════════════════════════════════ */
         .menu-container {
             max-width: var(--container-max);
-            margin: 12px auto 0;
-            padding: 0 var(--gutter) calc(var(--bottom-nav-height) + 30px);
+            margin: 32px auto 0;
+            padding: 0 var(--gutter) calc(var(--bottom-nav-height) + 40px);
         }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
         }
 
         .menu-card {
             background: var(--surface-container-lowest);
-            border-radius: 14px;
+            border-radius: var(--r-lg);
             overflow: hidden;
             border: 1px solid var(--outline-variant);
             display: flex;
             flex-direction: column;
+            transition: border-color var(--t-slow), box-shadow var(--t-slow);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .menu-card:hover {
+                border-color: var(--outline);
+                box-shadow: var(--shadow-md);
+            }
+            .menu-card:hover .card-img img.loaded {
+                transform: scale(1.03);
+            }
         }
 
         .menu-card .card-img {
             width: 100%;
-            height: 150px;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
             background: var(--surface-container);
             flex-shrink: 0;
@@ -269,12 +315,10 @@
             height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 0.45s ease-in-out;
+            transition: opacity 0.4s ease, transform 0.6s ease;
         }
 
-        .menu-card .card-img img.loaded {
-            opacity: 1;
-        }
+        .menu-card .card-img img.loaded { opacity: 1; }
 
         .menu-card .card-img .img-placeholder {
             width: 100%;
@@ -282,7 +326,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.8rem;
+            font-size: 1.6rem;
             color: var(--outline);
             background: var(--surface-container);
             position: absolute;
@@ -290,183 +334,190 @@
             z-index: 1;
         }
 
-        .menu-card .card-img img.loaded+.img-placeholder {
+        .menu-card .card-img img.loaded + .img-placeholder {
             display: none !important;
         }
 
         .menu-card .card-body {
-            padding: 12px 12px 12px;
+            padding: 18px 18px 20px;
             display: flex;
             flex-direction: column;
             flex: 1;
-            gap: 4px;
+            gap: 6px;
         }
 
         .menu-card .card-top {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            gap: 8px;
+            align-items: baseline;
+            gap: 12px;
         }
 
         .menu-card .item-name {
             font-family: var(--font-headline);
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: #b81a20;
-            line-height: 1.2;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--on-surface);
+            line-height: 1.3;
             flex: 1;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+            min-width: 0;
+            overflow-wrap: anywhere;
         }
 
         .menu-card .item-name .name-icon {
             color: var(--brand-secondary);
-            font-size: 0.55rem;
+            font-size: 0.7rem;
             opacity: 0.7;
             flex-shrink: 0;
         }
 
         .menu-card .price-badge {
-            background: linear-gradient(135deg, #fdc003, #fdd003);
-            color: #7a5a00;
-            font-family: var(--font-headline);
-            font-weight: 800;
-            font-size: 0.7rem;
-            padding: 2px 12px;
-            border-radius: 9999px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--brand-primary);
             white-space: nowrap;
             flex-shrink: 0;
-            border: 1px solid rgba(253, 192, 3, 0.3);
+            direction: ltr;
+            unicode-bidi: plaintext;
         }
 
         .menu-card .item-desc {
-            font-size: 0.6rem;
+            font-size: 0.8rem;
             color: var(--on-surface-variant);
             font-weight: 400;
-            line-height: 1.3;
-            opacity: 0.7;
-            margin-bottom: 4px;
+            line-height: 1.55;
+            opacity: 0.85;
+            margin-bottom: 12px;
+            flex: 1;
         }
 
         .menu-card .card-actions {
             display: flex;
             gap: 8px;
-            align-items: center;
+            align-items: stretch;
             margin-top: auto;
         }
 
+        /* ── Stepper ── */
         .menu-card .qty-stepper {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 2px;
-            background: var(--surface-container-low);
-            border-radius: 9999px;
-            padding: 2px;
-            border: 2px solid var(--outline-variant);
-            flex-shrink: 0;
+            border: 1px solid var(--outline-variant);
+            border-radius: var(--r-sm);
             overflow: hidden;
+            flex-shrink: 0;
+            background: var(--surface-container-lowest);
+            direction: ltr;
+            height: 40px;
         }
 
         .menu-card .qty-stepper .qty-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 9999px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: #ffffff;
+            width: 34px;
+            height: 100%;
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--on-surface-variant);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--brand-primary);
+            background: transparent;
             flex-shrink: 0;
+            transition: background var(--t-fast), color var(--t-fast);
+            font-family: var(--font-mono);
         }
-
-        .menu-card .qty-stepper .qty-btn.qty-minus {
-            background: var(--brand-primary-dark);
+        .menu-card .qty-stepper .qty-btn:hover {
+            background: var(--surface-container-low);
+            color: var(--brand-primary);
         }
-
-        .menu-card .qty-stepper .qty-btn.qty-plus {
-            background: var(--brand-primary);
+        .menu-card .qty-stepper .qty-btn:active {
+            background: var(--surface-container);
         }
 
         .menu-card .qty-stepper .qty-num {
-            min-width: 24px;
+            min-width: 30px;
             text-align: center;
-            font-weight: 800;
-            font-size: 0.85rem;
-            font-family: var(--font-headline);
+            font-weight: 600;
+            font-size: 0.92rem;
+            font-family: var(--font-mono);
             color: var(--on-surface);
             padding: 0 4px;
+            border-left: 1px solid var(--outline-variant);
+            border-right: 1px solid var(--outline-variant);
+            line-height: 38px;
         }
 
+        /* ── Add button ── */
         .menu-card .add-btn {
             flex: 1;
-            min-width: 60px;
-            padding: 6px 10px;
-            border-radius: 9999px;
+            padding: 0 14px;
+            border-radius: var(--r-sm);
             background: var(--brand-primary);
-            color: #ffffff;
+            color: #FFFFFF;
             font-family: var(--font-headline);
-            font-weight: 700;
-            font-size: 0.7rem;
+            font-weight: 500;
+            font-size: 0.88rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            border: 2px solid var(--brand-primary);
-            min-height: 34px;
+            height: 40px;
+            transition: background var(--t-fast);
+            min-width: 60px;
         }
 
-        .menu-card .add-btn .btn-icon {
-            color: #ffffff;
+        .menu-card .add-btn:hover { background: var(--brand-primary-dark); }
+        .menu-card .add-btn:active { transform: scale(0.99); }
+        .menu-card .add-btn:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
         }
 
-        .menu-card .add-btn .btn-label {
-            color: #ffffff;
-        }
+        .menu-card .add-btn .btn-icon { font-size: 0.8rem; }
+        .menu-card .add-btn .btn-label { color: #FFFFFF; }
 
         .menu-card .add-btn.added {
             background: var(--brand-tertiary);
-            border-color: var(--brand-tertiary);
         }
+        .menu-card .add-btn.added:hover { background: #254D32; }
 
         .empty-msg {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 40px 16px;
+            padding: 48px 20px;
             color: var(--on-surface-variant);
             font-family: var(--font-body);
             background: var(--surface-container-low);
-            border-radius: 18px;
-            border: 2px dashed var(--outline-variant);
+            border-radius: var(--r-lg);
+            border: 1px dashed var(--outline-variant);
+            font-size: 0.9rem;
         }
 
         .empty-msg i {
-            font-size: 2.6rem;
-            color: var(--outline-variant);
+            font-size: 2rem;
+            color: var(--outline);
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
+        /* ══════════════════════════════════════════════
            BOTTOM NAV
-           ═══════════════════════════════════════════════════════════════ */
+           ══════════════════════════════════════════════ */
         .bottom-nav {
             position: fixed;
-            bottom: 14px;
+            bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 200;
-            width: calc(100% - 24px);
-            max-width: 640px;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1.5px solid var(--outline-variant);
-            border-radius: 28px;
-            padding: 4px 4px;
+            width: calc(100% - 32px);
+            max-width: 720px;
+            background: var(--surface-container-lowest);
+            border: 1px solid var(--outline-variant);
+            border-radius: var(--r-pill);
+            padding: 6px;
             height: var(--bottom-nav-height);
             display: flex;
             align-items: center;
@@ -476,148 +527,165 @@
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
             flex-wrap: nowrap;
+            box-shadow: var(--shadow-lg);
         }
 
-        .bottom-nav::-webkit-scrollbar {
-            display: none;
-        }
+        .bottom-nav::-webkit-scrollbar { display: none; }
 
         .bottom-nav .nav-item {
             flex: 0 0 auto;
-            padding: 4px 12px;
-            border-radius: 18px;
+            padding: 10px 16px;
+            border-radius: var(--r-pill);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 1px;
-            border: 2px solid transparent;
+            gap: 2px;
+            border: none;
             background: transparent;
             color: var(--on-surface-variant);
             font-family: var(--font-headline);
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: 500;
+            font-size: 0.78rem;
             text-align: center;
             white-space: nowrap;
-            padding: 4px 14px;
-            min-height: 48px;
-            min-width: 52px;
+            min-height: 50px;
+            transition: background var(--t-fast), color var(--t-fast);
+            cursor: pointer;
+            user-select: none;
         }
 
-        .bottom-nav .nav-item i {
-            font-size: 1rem;
-            color: var(--brand-secondary-dark);
-        }
+        .bottom-nav .nav-item i:empty { display: none; }
 
         .bottom-nav .nav-item .nav-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            line-height: 1.1;
+            font-size: 0.78rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .bottom-nav .nav-item:hover {
+            background: var(--surface-container-low);
+            color: var(--on-surface);
         }
 
         .bottom-nav .nav-item.active {
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-dark));
-            color: #ffffff;
-            border-color: var(--brand-primary);
+            background: var(--brand-primary);
+            color: #FFFFFF;
         }
 
-        .bottom-nav .nav-item.active i {
-            color: #ffffff;
+        .bottom-nav .nav-item.active .nav-label { color: #FFFFFF; }
+
+        .bottom-nav .nav-item:focus-visible {
+            outline: 2px solid var(--brand-primary);
+            outline-offset: 2px;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           LOCATION POPUP
-           ═══════════════════════════════════════════════════════════════ */
+        /* ══════════════════════════════════════════════
+           LOCATION MODAL
+           ══════════════════════════════════════════════ */
         .location-modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.50);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(31, 27, 24, 0.55);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             z-index: 1100;
             justify-content: center;
             align-items: center;
             padding: 16px;
         }
 
-        .location-modal-overlay.active {
-            display: flex;
-        }
+        .location-modal-overlay.active { display: flex; }
 
         .location-modal-card {
             background: var(--surface-container-lowest);
             width: 100%;
             max-width: 520px;
-            border-radius: 18px;
-            padding: 24px 20px 20px;
+            border-radius: var(--r-lg);
+            padding: 24px;
             max-height: 90vh;
             overflow-y: auto;
-            border: 2px solid var(--brand-primary);
+            border: 1px solid var(--outline-variant);
+            box-shadow: var(--shadow-lg);
         }
 
         .location-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--brand-primary);
-            padding-bottom: 12px;
+            border-bottom: 1px solid var(--outline-variant);
+            padding-bottom: 16px;
             margin-bottom: 16px;
+            gap: 8px;
         }
 
         .location-modal-header h2 {
             font-family: var(--font-headline);
             font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--brand-primary);
+            font-weight: 600;
+            color: var(--on-surface);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .location-modal-header h2 i {
-            color: var(--brand-tertiary);
+            color: var(--brand-primary);
+            font-size: 1rem;
         }
 
         .location-close-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 9999px;
-            background: var(--surface-container);
-            border: 2px solid var(--outline-variant);
-            color: var(--on-surface);
-            font-size: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--surface-container-low);
+            border: 1px solid var(--outline-variant);
+            color: var(--on-surface-variant);
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background var(--t-fast), border-color var(--t-fast);
+        }
+        .location-close-btn:hover {
+            background: var(--surface-container);
+            border-color: var(--outline);
         }
 
         .location-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .location-card-item {
-            background: var(--surface-container-low);
-            border: 2px solid var(--outline-variant);
-            border-radius: 10px;
+            background: var(--surface-container-lowest);
+            border: 1px solid var(--outline-variant);
+            border-radius: var(--r-md);
             padding: 14px 16px;
             display: flex;
             align-items: center;
             gap: 14px;
+            cursor: pointer;
+            transition: border-color var(--t-fast), background var(--t-fast);
+        }
+
+        .location-card-item:hover {
+            border-color: var(--outline);
+            background: var(--surface-container-low);
         }
 
         .location-card-item .loc-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-dark));
-            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--r-sm);
+            background: var(--surface-container-low);
+            color: var(--brand-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 0.95rem;
             flex-shrink: 0;
         }
 
@@ -628,61 +696,63 @@
 
         .location-card-item .loc-info h4 {
             font-family: var(--font-headline);
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 0.9rem;
+            font-weight: 600;
             color: var(--on-surface);
+            line-height: 1.4;
         }
 
         .location-card-item .loc-info p {
-            font-size: 0.7rem;
+            font-size: 0.78rem;
             color: var(--on-surface-variant);
             display: flex;
-            align-items: center;
-            gap: 4px;
+            align-items: flex-start;
+            gap: 6px;
             margin-top: 2px;
+            line-height: 1.5;
         }
 
         .location-card-item .loc-info p i {
-            color: var(--brand-secondary-dark);
-            font-size: 0.6rem;
-        }
-
-        .location-card-item .loc-arrow {
-            color: var(--brand-primary);
-            font-size: 1.1rem;
+            color: var(--outline);
+            font-size: 0.7rem;
+            margin-top: 3px;
             flex-shrink: 0;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
+        .location-card-item .loc-arrow {
+            color: var(--outline);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        /* ══════════════════════════════════════════════
            CART MODAL
-           ═══════════════════════════════════════════════════════════════ */
+           ══════════════════════════════════════════════ */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.50);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(31, 27, 24, 0.55);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 12px;
+            padding: 16px;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal-card {
             background: var(--surface-container-lowest);
             width: 100%;
             max-width: 520px;
-            border-radius: 24px;
-            padding: 24px 22px 22px;
-            max-height: 92vh;
+            border-radius: var(--r-lg);
+            padding: 24px;
+            max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.06);
-            border: none;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--outline-variant);
             position: relative;
         }
 
@@ -690,92 +760,76 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 14px;
-            margin-bottom: 16px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            flex-wrap: wrap;
+            padding-bottom: 16px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--outline-variant);
             gap: 8px;
         }
 
         .modal-header .modal-title {
             font-family: var(--font-headline);
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--brand-primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--on-surface);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .modal-header .modal-title i {
-            font-size: 1.3rem;
-            color: var(--brand-secondary-dark);
-            background: rgba(253, 192, 3, 0.15);
-            padding: 8px;
-            border-radius: 50%;
+            font-size: 0.95rem;
+            color: var(--brand-primary);
         }
 
         .modal-header .modal-title span {
-            background: var(--brand-secondary);
-            color: var(--brand-secondary-dark);
-            font-size: 0.65rem;
-            padding: 2px 12px;
-            border-radius: 9999px;
-            font-weight: 700;
-            margin-right: 4px;
+            background: var(--surface-container-low);
+            color: var(--on-surface-variant);
+            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: var(--r-pill);
+            font-weight: 600;
+            font-family: var(--font-mono);
         }
 
         .delete-all-btn {
             background: transparent;
-            border: none;
-            color: var(--error);
-            font-size: 1rem;
-            padding: 6px 10px;
-            border-radius: 9999px;
+            border: 1px solid var(--outline-variant);
+            color: var(--on-surface-variant);
+            font-size: 0.85rem;
+            padding: 7px 12px;
+            border-radius: var(--r-sm);
             display: flex;
             align-items: center;
-            gap: 4px;
-            transition: background 0.2s;
-            font-weight: 600;
+            gap: 6px;
+            transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+            font-weight: 500;
         }
 
         .delete-all-btn:hover {
-            background: rgba(186, 26, 26, 0.08);
+            background: var(--surface-container-low);
+            border-color: var(--outline);
+            color: var(--error);
         }
 
-        .delete-all-btn i {
-            font-size: 1.1rem;
-        }
+        .delete-all-btn i { font-size: 0.85rem; }
 
         .cart-items-list {
-            margin: 4px 0 16px;
-            max-height: 34vh;
+            margin: 8px 0;
+            max-height: 48vh;
             overflow-y: auto;
-            padding-right: 2px;
-        }
-
-        .cart-items-list::-webkit-scrollbar {
-            width: 3px;
         }
 
         .cart-item-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            gap: 10px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--outline-variant);
+            gap: 12px;
             flex-wrap: wrap;
-            transition: background 0.15s;
         }
 
-        .cart-item-row:last-child {
-            border-bottom: none;
-        }
-
-        .cart-item-row:hover {
-            background: rgba(0, 0, 0, 0.01);
-        }
+        .cart-item-row:last-child { border-bottom: none; }
 
         .cart-item-info {
             display: flex;
@@ -786,82 +840,93 @@
         }
 
         .cart-item-info .ci-name {
-            font-weight: 700;
-            font-size: 0.9rem;
+            font-weight: 500;
+            font-size: 0.92rem;
             color: var(--on-surface);
             font-family: var(--font-headline);
+            line-height: 1.4;
         }
 
         .cart-item-info .ci-price {
-            font-size: 0.7rem;
+            font-size: 0.78rem;
             color: var(--on-surface-variant);
             font-weight: 500;
-            background: var(--surface-container-low);
-            padding: 2px 10px;
-            border-radius: 9999px;
+            font-family: var(--font-mono);
+            margin-top: 2px;
         }
 
         .cart-qty-control {
-            display: flex;
-            gap: 4px;
+            display: inline-flex;
+            gap: 0;
             align-items: center;
-            background: var(--surface-container-low);
-            border-radius: 9999px;
-            padding: 3px 6px;
-            border: none;
+            background: var(--surface-container-lowest);
+            border: 1px solid var(--outline-variant);
+            border-radius: var(--r-sm);
+            padding: 0;
             flex-shrink: 0;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+            height: 32px;
+            direction: ltr;
         }
 
         .cart-qty-control button {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-weight: 700;
-            font-size: 0.75rem;
-            color: var(--brand-primary);
+            width: 30px;
+            height: 100%;
+            border-radius: 0;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--on-surface-variant);
             display: flex;
             align-items: center;
             justify-content: center;
             border: none;
             background: transparent;
-            transition: background 0.2s, transform 0.1s;
+            transition: background var(--t-fast), color var(--t-fast);
+            font-family: var(--font-mono);
         }
 
         .cart-qty-control button:hover {
-            background: rgba(184, 26, 32, 0.08);
-            transform: scale(1.05);
+            background: var(--surface-container-low);
+            color: var(--brand-primary);
         }
 
         .cart-qty-control .cq-num {
-            min-width: 22px;
+            min-width: 30px;
             text-align: center;
-            font-weight: 800;
+            font-weight: 600;
             font-size: 0.85rem;
-            font-family: var(--font-headline);
+            font-family: var(--font-mono);
             color: var(--on-surface);
+            border-left: 1px solid var(--outline-variant);
+            border-right: 1px solid var(--outline-variant);
+            line-height: 30px;
+            padding: 0 2px;
         }
 
         .cart-qty-control .cq-remove {
+            color: var(--outline);
+            font-size: 0.75rem;
+            border-right: 1px solid var(--outline-variant);
+        }
+
+        .cart-qty-control .cq-remove:hover {
             color: var(--error);
-            font-size: 0.7rem;
+            background: var(--error-container);
         }
 
         .cart-item-total {
-            font-weight: 800;
-            font-size: 0.85rem;
+            font-weight: 600;
+            font-size: 0.92rem;
             color: var(--brand-primary);
-            font-family: var(--font-headline);
+            font-family: var(--font-mono);
             flex-shrink: 0;
-            background: rgba(184, 26, 32, 0.04);
-            padding: 2px 12px;
-            border-radius: 9999px;
+            direction: ltr;
+            unicode-bidi: plaintext;
         }
 
         .cart-summary {
-            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            border-top: 1px solid var(--outline-variant);
             padding-top: 16px;
-            margin-top: 4px;
+            margin-top: 8px;
         }
 
         .cart-summary-row {
@@ -869,158 +934,167 @@
             justify-content: space-between;
             font-size: 0.85rem;
             color: var(--on-surface-variant);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-weight: 500;
-            padding: 0 2px;
+        }
+
+        .cart-summary-row span:last-child {
+            font-family: var(--font-mono);
+            direction: ltr;
+            color: var(--on-surface);
+            font-weight: 500;
         }
 
         .cart-total {
-            font-size: 1.1rem;
-            font-weight: 900;
+            font-size: 1rem;
+            font-weight: 600;
             display: flex;
             justify-content: space-between;
-            color: var(--brand-primary);
+            color: var(--on-surface);
             font-family: var(--font-headline);
-            border-top: 2px solid var(--brand-secondary);
+            border-top: 1px dashed var(--outline-variant);
             padding-top: 12px;
-            margin-top: 6px;
+            margin-top: 8px;
+        }
+
+        .cart-total span:last-child {
+            color: var(--brand-primary);
+            font-family: var(--font-mono);
+            direction: ltr;
         }
 
         .cart-actions {
             display: flex;
             gap: 10px;
-            margin-top: 18px;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
 
         .close-modal-btn {
-            background: var(--surface-container);
-            color: var(--on-surface);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 9999px;
-            font-weight: 700;
+            background: var(--surface-container-lowest);
+            color: var(--on-surface-variant);
+            border: 1px solid var(--outline-variant);
+            padding: 11px 20px;
+            border-radius: var(--r-sm);
+            font-weight: 500;
             flex: 1;
-            min-width: 70px;
-            font-size: 0.85rem;
-            transition: background 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            min-width: 80px;
+            font-size: 0.88rem;
+            transition: background var(--t-fast), border-color var(--t-fast);
         }
 
         .close-modal-btn:hover {
             background: var(--surface-container-low);
+            border-color: var(--outline);
         }
 
         .checkout-btn {
-            background: linear-gradient(135deg, var(--brand-secondary), #fdd003);
-            color: var(--brand-secondary-dark);
+            background: var(--brand-primary);
+            color: #FFFFFF;
             border: none;
-            padding: 10px 20px;
-            border-radius: 9999px;
-            font-weight: 800;
+            padding: 11px 20px;
+            border-radius: var(--r-sm);
+            font-weight: 500;
             flex: 1.5;
-            min-width: 100px;
-            font-size: 0.9rem;
+            min-width: 110px;
+            font-size: 0.88rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(253, 192, 3, 0.3);
-            transition: transform 0.15s, box-shadow 0.2s;
+            transition: background var(--t-fast);
         }
 
-        .checkout-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(253, 192, 3, 0.4);
-        }
+        .checkout-btn:hover:not(:disabled) { background: var(--brand-primary-dark); }
 
         .checkout-btn:disabled {
-            opacity: 0.35;
+            background: var(--surface-container-low);
+            color: var(--outline);
             cursor: not-allowed;
-            box-shadow: none;
         }
 
-        .checkout-btn i {
-            font-size: 1rem;
-        }
+        .checkout-btn i { font-size: 0.85rem; }
 
         .fee-message {
-            margin-top: 8px;
-            padding: 8px 14px;
-            background: rgba(184, 26, 32, 0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(184, 26, 32, 0.06);
-            font-size: 0.8rem;
+            margin-top: 10px;
+            padding: 10px 14px;
+            background: var(--surface-container-low);
+            border-radius: var(--r-sm);
+            border: 1px solid var(--outline-variant);
+            font-size: 0.78rem;
             color: var(--on-surface-variant);
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
+            line-height: 1.5;
         }
 
         .fee-message i {
             color: var(--brand-primary);
+            font-size: 0.8rem;
+            flex-shrink: 0;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           CHECKOUT FORM
-           ═══════════════════════════════════════════════════════════════ */
+        /* ══════════════════════════════════════════════
+           CHECKOUT FORM (SweetAlert)
+           ══════════════════════════════════════════════ */
         .checkout-form-group {
             text-align: right;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .checkout-form-group label {
             display: block;
-            font-weight: 700;
-            font-size: 0.75rem;
-            margin-bottom: 4px;
+            font-weight: 500;
+            font-size: 0.82rem;
+            margin-bottom: 6px;
             color: var(--on-surface-variant);
             font-family: var(--font-headline);
-            letter-spacing: 0.2px;
         }
 
         .checkout-form-group label i {
-            color: var(--brand-primary);
-            margin-left: 6px;
+            color: var(--outline);
+            margin-left: 4px;
+            font-size: 0.8rem;
         }
 
         .checkout-form-group input,
         .checkout-form-group textarea {
             width: 100%;
             padding: 10px 14px;
-            border: 2px solid var(--outline-variant);
-            border-radius: 10px;
-            font-size: 0.85rem;
+            border: 1px solid var(--outline-variant);
+            border-radius: var(--r-sm);
+            font-size: 0.9rem;
             font-family: var(--font-body);
             background: var(--surface-container-lowest);
             text-align: right;
             color: var(--on-surface);
-            transition: border-color 0.15s ease;
+            transition: border-color var(--t-fast), box-shadow var(--t-fast);
         }
 
         .checkout-form-group input:focus,
         .checkout-form-group textarea:focus {
             border-color: var(--brand-primary);
-            border-width: 3px;
+            box-shadow: 0 0 0 3px var(--primary-soft);
         }
 
         .checkout-form-group textarea {
             resize: vertical;
-            min-height: 44px;
+            min-height: 52px;
         }
 
         .order-summary-box {
             background: var(--surface-container-low);
-            border: 2px solid var(--outline-variant);
-            border-radius: 10px;
-            padding: 8px 12px;
+            border: 1px solid var(--outline-variant);
+            border-radius: var(--r-sm);
+            padding: 12px 14px;
             text-align: right;
-            font-size: 0.7rem;
+            font-size: 0.82rem;
             color: var(--on-surface-variant);
-            margin-bottom: 8px;
-            max-height: 110px;
+            margin-bottom: 12px;
+            max-height: 150px;
             overflow-y: auto;
         }
 
@@ -1028,444 +1102,247 @@
             display: flex;
             justify-content: space-between;
             padding: 3px 0;
-            font-size: 0.75rem;
+            font-size: 0.82rem;
+            gap: 12px;
+        }
+
+        .order-summary-box .os-row span:last-child {
+            font-family: var(--font-mono);
+            direction: ltr;
+            font-weight: 500;
         }
 
         .order-summary-box .os-row.border-top {
-            border-top: 2px solid var(--outline-variant);
-            margin-top: 4px;
-            padding-top: 6px;
+            border-top: 1px solid var(--outline-variant);
+            margin-top: 6px;
+            padding-top: 8px;
         }
 
         .order-summary-box .os-row.total {
-            font-weight: 800;
+            font-weight: 600;
             color: var(--brand-primary);
-            font-size: 0.85rem;
+            font-size: 0.92rem;
+            border-top: 1px dashed var(--outline-variant);
+            margin-top: 8px;
+            padding-top: 8px;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
+        /* ══════════════════════════════════════════════
            FOOTER
-           ═══════════════════════════════════════════════════════════════ */
+           ══════════════════════════════════════════════ */
         .footer-section {
             max-width: var(--container-max);
-            margin: 0 auto 10px;
-            padding: 0 14px 6px;
+            margin: 16px auto 32px;
+            padding: 0 var(--gutter);
             text-align: center;
             font-family: var(--font-body);
-            font-size: 0.55rem;
-            color: var(--on-surface-variant);
+            font-size: 0.8rem;
+            color: var(--outline);
         }
 
         .footer-line {
             border: none;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--brand-primary), var(--brand-secondary), transparent);
-            margin-bottom: 10px;
-            border-radius: 10px;
-            opacity: 0.5;
+            height: 1px;
+            background: var(--outline-variant);
+            margin-bottom: 20px;
         }
 
         .developer-credit {
             direction: ltr;
             unicode-bidi: embed;
-            display: inline-block;
-            width: 100%;
-            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            font-weight: 400;
         }
 
         .developer-link {
+            color: var(--on-surface-variant);
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: color var(--t-fast), border-color var(--t-fast);
+        }
+        .developer-link:hover {
             color: var(--brand-primary);
-            font-weight: 800;
+            border-bottom-color: var(--brand-primary);
         }
 
-        /* ═══════════════════════════════════════════════════════════════
+        /* ══════════════════════════════════════════════
            SWEETALERT OVERRIDES
-           ═══════════════════════════════════════════════════════════════ */
+           ══════════════════════════════════════════════ */
         .swal2-popup.swal2-modal {
             font-family: var(--font-body) !important;
-            border-radius: 18px !important;
-            padding: 1.2rem !important;
+            border-radius: var(--r-md) !important;
+            padding: 1.5rem !important;
             width: 92% !important;
             max-width: 440px !important;
-            border: 2px solid var(--brand-primary) !important;
+            border: 1px solid var(--outline-variant) !important;
+            box-shadow: var(--shadow-lg) !important;
         }
 
         .swal2-popup .swal2-title {
             font-family: var(--font-headline) !important;
-            color: var(--brand-primary) !important;
+            color: var(--on-surface) !important;
             font-size: 1.1rem !important;
+            font-weight: 600 !important;
+            padding: 0 0 0.6rem !important;
         }
 
         .swal2-popup .swal2-html-container {
-            font-size: 0.85rem !important;
-            color: var(--on-surface) !important;
+            font-size: 0.9rem !important;
+            color: var(--on-surface-variant) !important;
             text-align: right !important;
+            margin: 0 !important;
         }
 
-        .swal2-popup .swal2-confirm {
-            background: var(--brand-primary) !important;
-            border-radius: 9999px !important;
-            font-weight: 700 !important;
-            padding: 8px 24px !important;
-            font-size: 0.85rem !important;
-        }
-
+        .swal2-popup .swal2-confirm,
         .swal2-popup .swal2-cancel {
-            border-radius: 9999px !important;
-            font-weight: 700 !important;
-            padding: 8px 24px !important;
+            border-radius: var(--r-sm) !important;
+            font-weight: 500 !important;
+            padding: 9px 20px !important;
+            font-size: 0.85rem !important;
+            box-shadow: none !important;
+            font-family: var(--font-headline) !important;
         }
 
         .swal2-popup .swal2-input,
         .swal2-popup .swal2-textarea {
-            border-radius: 10px !important;
-            border: 2px solid var(--outline-variant) !important;
+            border-radius: var(--r-sm) !important;
+            border: 1px solid var(--outline-variant) !important;
             font-family: var(--font-body) !important;
             text-align: right !important;
             padding: 10px 14px !important;
-            font-size: 0.85rem !important;
+            font-size: 0.9rem !important;
+            box-shadow: none !important;
         }
 
         .swal2-popup .swal2-input:focus,
         .swal2-popup .swal2-textarea:focus {
             border-color: var(--brand-primary) !important;
-            border-width: 3px !important;
+            box-shadow: 0 0 0 3px var(--primary-soft) !important;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
+        /* ══════════════════════════════════════════════
            RESPONSIVE
-           ═══════════════════════════════════════════════════════════════ */
-        @media (min-width: 681px) {
-            .bottom-nav .nav-item {
-                padding: 6px 18px;
-                font-size: 0.95rem;
-            }
-            .bottom-nav .nav-item i {
-                font-size: 1.2rem;
-            }
-            .bottom-nav .nav-item .nav-label {
-                font-size: 0.85rem;
-            }
+           ══════════════════════════════════════════════ */
+        @media (min-width: 1024px) {
             .menu-grid {
-                grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-                gap: 20px;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 28px;
             }
-            .menu-card .card-img {
-                height: 180px;
+            .bottom-nav {
+                padding: 6px 10px;
+                gap: 4px;
+                max-width: 780px;
             }
-            .menu-card .item-name {
-                font-size: 0.95rem;
+            .bottom-nav .nav-item {
+                padding: 12px 22px;
+                font-size: 0.85rem;
+                min-height: 52px;
             }
-            .menu-card .price-badge {
-                font-size: 0.8rem;
-                padding: 2px 14px;
-            }
-            .menu-card .add-btn {
-                font-size: 0.8rem;
-                padding: 8px 14px;
-                min-height: 38px;
-            }
-            .menu-card .qty-stepper .qty-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 1rem;
-            }
-            .logo-wrapper {
-                width: 50px;
-                height: 50px;
-            }
-            .brand-text h1 {
-                font-size: 1.3rem;
-            }
-            .icon-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-            }
-            .cart-badge {
-                width: 24px;
-                height: 24px;
-                font-size: 0.55rem;
-                top: -6px;
-                right: -6px;
-            }
+            .bottom-nav .nav-item .nav-label { font-size: 0.85rem; }
         }
 
         @media (max-width: 680px) {
+            :root { --gutter: 16px; }
+            .header-container { padding: 12px var(--gutter); min-height: 58px; }
+            .logo-wrapper { width: 42px; height: 42px; }
+            .brand-text h1 { font-size: 1.15rem; }
+            .brand-text .sub { font-size: 0.68rem; }
+            .icon-btn { width: 40px; height: 40px; font-size: 0.95rem; }
+
             .menu-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 16px;
+            }
+            .menu-card .card-body { padding: 14px 14px 16px; }
+            .menu-card .item-name { font-size: 0.95rem; }
+            .menu-card .price-badge { font-size: 0.9rem; }
+            .menu-card .item-desc { font-size: 0.75rem; }
+
+            .bottom-nav {
+                width: calc(100% - 24px);
+                padding: 6px;
+                height: 64px;
+            }
+            .bottom-nav .nav-item {
+                padding: 8px 12px;
+                font-size: 0.72rem;
+                min-height: 44px;
+            }
+            .bottom-nav .nav-item .nav-label { font-size: 0.72rem; }
+
+            .modal-card { padding: 20px; }
+            .location-modal-card { padding: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            :root { --gutter: 14px; }
+            .header-container { padding: 10px var(--gutter); min-height: 56px; }
+            .logo-wrapper { width: 40px; height: 40px; }
+            .brand-text h1 { font-size: 1.05rem; }
+            .brand-text .sub { font-size: 0.65rem; }
+            .icon-btn { width: 38px; height: 38px; font-size: 0.9rem; }
+            .cart-badge { font-size: 0.6rem; min-width: 18px; height: 18px; }
+
+            .menu-container { padding: 0 var(--gutter) calc(var(--bottom-nav-height) + 30px); }
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
                 gap: 12px;
             }
-            .menu-card .card-img {
-                height: 115px;
-            }
-            .menu-card .item-name {
-                font-size: 0.75rem;
-            }
-            .menu-card .price-badge {
-                font-size: 0.6rem;
-                padding: 1px 10px;
-            }
-            .menu-card .add-btn {
-                font-size: 0.6rem;
-                padding: 5px 8px;
-                min-height: 30px;
-            }
-            .menu-card .qty-stepper .qty-btn {
-                width: 26px;
-                height: 26px;
-                font-size: 0.8rem;
-            }
-            .menu-card .qty-stepper .qty-num {
-                min-width: 18px;
-                font-size: 0.75rem;
-            }
-            .menu-card .card-body {
-                padding: 8px 8px 8px;
-            }
-            .bottom-nav {
-                padding: 4px 3px;
-                height: calc(var(--bottom-nav-height) - 6px);
-                gap: 2px;
-                border-radius: 22px;
-            }
-            .bottom-nav .nav-item {
-                padding: 3px 8px;
-                font-size: 0.75rem;
-                min-height: 40px;
-                min-width: 44px;
-            }
-            .bottom-nav .nav-item i {
-                font-size: 0.9rem;
-            }
-            .bottom-nav .nav-item .nav-label {
-                font-size: 0.65rem;
-            }
-            .brand-text h1 {
-                font-size: 1rem;
-            }
-            .logo-wrapper {
-                width: 38px;
-                height: 38px;
-            }
-            .icon-btn {
-                width: 38px;
-                height: 38px;
-                font-size: 0.9rem;
-            }
-            .location-modal-card {
-                padding: 18px 14px 16px;
-            }
-            .location-card-item .loc-icon {
-                width: 42px;
-                height: 42px;
-                font-size: 1rem;
-            }
-            .location-card-item .loc-info h4 {
-                font-size: 0.75rem;
-            }
-            .modal-card {
-                padding: 16px 14px 14px;
-                border-radius: 20px;
-            }
-            .modal-header .modal-title {
-                font-size: 0.95rem;
-            }
-            .cart-item-info .ci-name {
-                font-size: 0.8rem;
-            }
-            .cart-qty-control button {
-                width: 26px;
-                height: 26px;
-                font-size: 0.7rem;
-            }
-            .cart-item-total {
-                font-size: 0.75rem;
-            }
-            .checkout-btn {
-                font-size: 0.8rem;
-                padding: 8px 16px;
-                min-width: 80px;
-            }
-            .close-modal-btn {
-                font-size: 0.8rem;
-                padding: 8px 16px;
-            }
-            .delete-all-btn {
-                font-size: 0.9rem;
-            }
+            .menu-card .card-body { padding: 12px 12px 14px; gap: 4px; }
+            .menu-card .card-top { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .menu-card .item-name { font-size: 0.85rem; }
+            .menu-card .price-badge { font-size: 0.85rem; }
+            .menu-card .item-desc { font-size: 0.72rem; margin-bottom: 10px; }
+
+            .menu-card .card-actions { gap: 6px; }
+            .menu-card .qty-stepper { height: 36px; }
+            .menu-card .qty-stepper .qty-btn { width: 28px; font-size: 0.9rem; }
+            .menu-card .qty-stepper .qty-num { min-width: 24px; font-size: 0.85rem; line-height: 34px; }
+            .menu-card .add-btn { height: 36px; font-size: 0.78rem; padding: 0 10px; gap: 4px; }
+            .menu-card .add-btn .btn-icon { font-size: 0.7rem; }
+
+            .cart-item-row { padding: 12px 0; gap: 8px; }
+            .cart-item-info .ci-name { font-size: 0.85rem; }
+            .cart-qty-control { height: 30px; }
+            .cart-qty-control button { width: 26px; font-size: 0.8rem; }
+            .cart-qty-control .cq-num { min-width: 26px; font-size: 0.8rem; line-height: 28px; }
+            .cart-item-total { font-size: 0.85rem; }
+            .checkout-btn, .close-modal-btn { font-size: 0.82rem; padding: 10px 14px; }
+
+            .modal-card { padding: 16px; border-radius: var(--r-md); }
+            .location-modal-card { padding: 16px; border-radius: var(--r-md); }
+            .location-card-item { padding: 12px; gap: 10px; }
+            .location-card-item .loc-icon { width: 36px; height: 36px; font-size: 0.85rem; }
+            .location-card-item .loc-info h4 { font-size: 0.85rem; }
+            .location-card-item .loc-info p { font-size: 0.72rem; }
         }
 
-        @media (max-width: 420px) {
-            .menu-grid {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-                gap: 10px;
-            }
-            .menu-card .card-img {
-                height: 90px;
-            }
-            .menu-card .item-name {
-                font-size: 0.6rem;
-            }
-            .menu-card .price-badge {
-                font-size: 0.5rem;
-                padding: 1px 8px;
-            }
-            .menu-card .add-btn {
-                font-size: 0.5rem;
-                padding: 4px 6px;
-                gap: 4px;
-                min-height: 26px;
-            }
-            .menu-card .add-btn .btn-icon {
-                font-size: 0.6rem;
-            }
-            .menu-card .qty-stepper .qty-btn {
-                width: 22px;
-                height: 22px;
-                font-size: 0.7rem;
-            }
-            .menu-card .qty-stepper .qty-num {
-                min-width: 14px;
-                font-size: 0.6rem;
-            }
-            .menu-card .card-body {
-                padding: 4px 4px 8px;
-            }
-            .bottom-nav .nav-item {
-                padding: 2px 5px;
-                font-size: 0.6rem;
-                min-height: 34px;
-                min-width: 38px;
-            }
-            .bottom-nav .nav-item i {
-                font-size: 0.75rem;
-            }
-            .bottom-nav .nav-item .nav-label {
-                font-size: 0.5rem;
-            }
-            .brand-text h1 {
-                font-size: 0.85rem;
-            }
-            .logo-wrapper {
-                width: 32px;
-                height: 32px;
-            }
-            .icon-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.75rem;
-            }
-            .header-container {
-                padding: 2px 10px;
-            }
-            .location-modal-card {
-                padding: 14px 10px 12px;
-            }
-            .location-card-item {
-                padding: 10px 12px;
-                gap: 10px;
-            }
-            .location-card-item .loc-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 0.85rem;
-            }
-            .modal-card {
-                padding: 12px 10px 12px;
-            }
-            .cart-item-row {
-                padding: 6px 0;
-            }
-            .cart-qty-control button {
-                width: 22px;
-                height: 22px;
-                font-size: 0.6rem;
-            }
-            .cart-item-total {
-                font-size: 0.7rem;
-            }
-            .cart-summary-row {
-                font-size: 0.75rem;
-            }
-            .cart-total {
-                font-size: 0.95rem;
-            }
-            .fee-message {
-                font-size: 0.65rem;
-                padding: 6px 10px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .menu-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 24px;
-            }
-            .menu-card .card-img {
-                height: 200px;
-            }
-            .bottom-nav {
-                padding: 4px 8px;
-                gap: 4px;
-            }
-            .bottom-nav .nav-item {
-                padding: 8px 24px;
-                font-size: 1rem;
-                min-height: 54px;
-            }
-            .bottom-nav .nav-item i {
-                font-size: 1.2rem;
-            }
-            .bottom-nav .nav-item .nav-label {
-                font-size: 0.9rem;
-            }
+        @media (max-width: 360px) {
+            .menu-grid { grid-template-columns: 1fr; gap: 12px; }
+            .menu-card .card-top { flex-direction: row; align-items: baseline; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
+            *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-            html {
-                scroll-behavior: auto !important;
-            }
+            html { scroll-behavior: auto !important; }
         }
 
         :focus-visible {
-            outline: 3px solid var(--brand-primary);
+            outline: 2px solid var(--brand-primary);
             outline-offset: 2px;
-        }
-
-        button,
-        .nav-item,
-        .location-card-item,
-        .menu-card .add-btn,
-        .menu-card .qty-stepper .qty-btn {
-            min-height: 44px;
-            min-width: 44px;
-        }
-
-        @media (max-width: 420px) {
-            button,
-            .nav-item,
-            .location-card-item,
-            .menu-card .add-btn,
-            .menu-card .qty-stepper .qty-btn {
-                min-height: 36px;
-                min-width: 36px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-    HEADER
-    ═══════════════════════════════════════════════════════════════ -->
     <header class="app-header" id="appHeader" role="banner">
         <div class="header-container">
             <div class="logo-area">
@@ -1474,7 +1351,7 @@
                 </div>
                 <div class="brand-text">
                     <h1>كشري هند</h1>
-                    <div class="sub"><i class="fas fa-star" aria-hidden="true"></i> طعم أصيل <i class="fas fa-star" aria-hidden="true"></i></div>
+                    <div class="sub">طعم أصيل · جودة عالية</div>
                 </div>
             </div>
             <div class="header-actions">
@@ -1489,38 +1366,24 @@
         </div>
     </header>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-    MENU
-    ═══════════════════════════════════════════════════════════════ -->
     <main class="menu-container" id="mainContent" role="main">
         <div id="menuGrid" class="menu-grid" role="list">
             <div class="empty-msg" role="status"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i> جاري تحميل المنيو...</div>
         </div>
     </main>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-    BOTTOM NAVIGATION
-    ═══════════════════════════════════════════════════════════════ -->
     <nav class="bottom-nav" id="bottomNav" role="tablist" aria-label="تصنيفات المنيو"></nav>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-    LOCATION POPUP (Branches)
-    ═══════════════════════════════════════════════════════════════ -->
     <div class="location-modal-overlay" id="locationModal" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
         <div class="location-modal-card">
             <div class="location-modal-header">
                 <h2 id="locationModalTitle"><i class="fas fa-store-alt" aria-hidden="true"></i> فروع كشري هند</h2>
                 <button class="location-close-btn" id="locationCloseBtn" aria-label="إغلاق"><i class="fas fa-times" aria-hidden="true"></i></button>
             </div>
-            <div class="location-grid" id="locationGrid" role="list">
-                <!-- rendered by JS -->
-            </div>
+            <div class="location-grid" id="locationGrid" role="list"></div>
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-    CART MODAL
-    ═══════════════════════════════════════════════════════════════ -->
     <div class="modal-overlay" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle">
         <div class="modal-card">
             <div class="modal-header">
@@ -1529,25 +1392,20 @@
                     <span id="cartItemCountBadge" aria-label="عدد الأصناف">0</span>
                 </div>
                 <button class="delete-all-btn" id="deleteAllCartBtn" aria-label="حذف جميع العناصر من السلة">
-                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                    <i class="fas fa-trash-alt" aria-hidden="true"></i> حذف الكل
                 </button>
             </div>
-            <div id="cartItemsList" class="cart-items-list" role="list">
-                <!-- rendered by JS -->
-            </div>
-            <div class="cart-summary" id="cartSummary" role="region" aria-label="ملخص الطلب">
-                <!-- rendered by JS -->
-            </div>
+            <div id="cartItemsList" class="cart-items-list" role="list"></div>
+            <div class="cart-summary" id="cartSummary" role="region" aria-label="ملخص الطلب"></div>
             <div class="cart-actions">
-                <button class="close-modal-btn" id="modalCloseBtn"><i class="fas fa-chevron-right" aria-hidden="true"></i> إغلاق</button>
-                <button class="checkout-btn" id="checkoutBtn" disabled><i class="fas fa-credit-card" aria-hidden="true"></i> إتمام الطلب</button>
+                <button class="close-modal-btn" id="modalCloseBtn">إغلاق</button>
+                <button class="checkout-btn" id="checkoutBtn" disabled>
+                    إتمام الطلب <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-    FOOTER
-    ═══════════════════════════════════════════════════════════════ -->
     <footer class="footer-section" role="contentinfo">
         <hr class="footer-line" aria-hidden="true" />
         <div class="developer-credit">
@@ -1556,9 +1414,6 @@
         </div>
     </footer>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-    JAVASCRIPT — COMPLETE APP (with fix for image flicker)
-    ═══════════════════════════════════════════════════════════════ -->
     <script>
         (function app() {
             'use strict';
@@ -1605,15 +1460,9 @@
                     this._notify();
                 },
 
-                get items() {
-                    return this._items.slice();
-                },
-                get total() {
-                    return this._items.reduce((s, i) => s + (i.price * i.quantity), 0);
-                },
-                get count() {
-                    return this._items.reduce((s, i) => s + i.quantity, 0);
-                },
+                get items() { return this._items.slice(); },
+                get total() { return this._items.reduce((s, i) => s + (i.price * i.quantity), 0); },
+                get count() { return this._items.reduce((s, i) => s + i.quantity, 0); },
 
                 getQuantity(itemId) {
                     const found = this._items.find(i => i.id === itemId);
@@ -1678,16 +1527,11 @@
                     this._notify();
                 },
 
-                onUpdate(fn) {
-                    this._listeners.push(fn);
-                },
+                onUpdate(fn) { this._listeners.push(fn); },
 
-                _persist() {
-                    Storage.set('koshary_hind_cart', this._items);
-                },
+                _persist() { Storage.set('koshary_hind_cart', this._items); },
                 _notify() {
                     this._listeners.forEach(fn => fn(this._items.slice()));
-                    // تحديث جزئي دون إعادة رسم كامل
                     if (typeof Menu !== 'undefined' && Menu.updateItems) {
                         Menu.updateItems();
                     }
@@ -1707,23 +1551,20 @@
                         .replace(/</g, '&lt;')
                         .replace(/>/g, '&gt;');
                 },
-
                 generateId(name, category) {
                     return `${category}_${name.replace(/\s/g, '')}`;
                 }
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  5. LAZY LOADER (Intersection Observer)
+            //  5. LAZY LOADER
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const LazyLoader = {
                 _observer: null,
 
                 init() {
-                    if (!('IntersectionObserver' in window)) {
-                        return;
-                    }
+                    if (!('IntersectionObserver' in window)) return;
                     this._observer = new IntersectionObserver((entries) => {
                         for (const entry of entries) {
                             if (entry.isIntersecting) {
@@ -1732,14 +1573,11 @@
                                 if (dataSrc) {
                                     img.src = dataSrc;
                                     img.removeAttribute('data-src');
-                                    img.addEventListener('load', () => {
-                                        img.classList.add('loaded');
-                                    });
+                                    img.addEventListener('load', () => img.classList.add('loaded'));
                                     img.addEventListener('error', () => {
                                         img.style.display = 'none';
                                         const placeholder = img.nextElementSibling;
-                                        if (placeholder && placeholder.classList.contains(
-                                                'img-placeholder')) {
+                                        if (placeholder && placeholder.classList.contains('img-placeholder')) {
                                             placeholder.style.display = 'flex';
                                         }
                                     });
@@ -1747,10 +1585,7 @@
                                 this._observer.unobserve(img);
                             }
                         }
-                    }, {
-                        rootMargin: '100px 0px 100px 0px',
-                        threshold: 0.01
-                    });
+                    }, { rootMargin: '250px 0px', threshold: 0.01 });
                 },
 
                 observe(img) {
@@ -1762,9 +1597,7 @@
                         if (dataSrc) {
                             img.src = dataSrc;
                             img.removeAttribute('data-src');
-                            img.addEventListener('load', () => {
-                                img.classList.add('loaded');
-                            });
+                            img.addEventListener('load', () => img.classList.add('loaded'));
                             img.addEventListener('error', () => {
                                 img.style.display = 'none';
                                 const placeholder = img.nextElementSibling;
@@ -1779,16 +1612,12 @@
                 refresh(container) {
                     if (!container) return;
                     const imgs = container.querySelectorAll('img[data-src]');
-                    for (const img of imgs) {
-                        this.observe(img);
-                    }
+                    for (const img of imgs) this.observe(img);
                 },
 
                 observeAll() {
                     const imgs = document.querySelectorAll('img[data-src]');
-                    for (const img of imgs) {
-                        this.observe(img);
-                    }
+                    for (const img of imgs) this.observe(img);
                 }
             };
 
@@ -1810,9 +1639,7 @@
                     { name: "كشري كبير", price: 80, img: "images/KosharyKebda/koshary-kebda-kbeer.png", desc: "حجم كبير" },
                     { name: "كشري وسط", price: 70, img: "images/KosharyKebda/koshary-kebda-wast.png", desc: "حجم وسط" },
                     { name: " هند", price: 60, img: "images/KosharyKebda/koshary-kebda-hend.png", desc: " هند" },
-                    { name: "كشري صغير", price: 55, img: "images/KosharyKebda/koshary-kebda-soghayar.png",
-                    desc: "حجم صغير" }
-                    
+                    { name: "كشري صغير", price: 55, img: "images/KosharyKebda/koshary-kebda-soghayar.png", desc: "حجم صغير" }
                 ],
                 "طواجن عادي": [
                     { name: "فراخ", price: 40, img: "images/Tawajen3adi/tagen-farakh-3ady.png", desc: "طاجن فراخ" },
@@ -1820,12 +1647,9 @@
                     { name: "كبدة", price: 38, img: "images/Tawajen3adi/tagen-kebda-3ady.png", desc: "طاجن كبدة" }
                 ],
                 "طواجن موتزريلا": [
-                    { name: "فراخ", price: 55, img: "images/TawajenMozzarella/tagen-farakh-mozzarella.png",
-                        desc: "طاجن فراخ موتزريلا" },
-                    { name: "لحمة", price: 53, img: "images/TawajenMozzarella/tagen-lahma-mozzarella.png",
-                        desc: "طاجن لحمة موتزريلا" },
-                    { name: "كبدة", price: 53, img: "images/TawajenMozzarella/tagen-kebda-mozzarella.png",
-                        desc: "طاجن كبدة موتزريلا" }
+                    { name: "فراخ", price: 55, img: "images/TawajenMozzarella/tagen-farakh-mozzarella.png", desc: "طاجن فراخ موتزريلا" },
+                    { name: "لحمة", price: 53, img: "images/TawajenMozzarella/tagen-lahma-mozzarella.png", desc: "طاجن لحمة موتزريلا" },
+                    { name: "كبدة", price: 53, img: "images/TawajenMozzarella/tagen-kebda-mozzarella.png", desc: "طاجن كبدة موتزريلا" }
                 ],
                 "طواجن ميكس": [
                     { name: "فراخ", price: 65, img: "images/TawajenMix/tagen-farakh-mix.png", desc: "طاجن فراخ ميكس" },
@@ -1867,7 +1691,6 @@
                 { id: "الإضافات" }
             ];
 
-            // ── Menu Module ──
             const Menu = {
                 _activeCategory: CATEGORIES[0].id,
                 _container: null,
@@ -1886,9 +1709,7 @@
                     this.renderNav();
                     this.render();
                     const container = document.getElementById('mainContent');
-                    if (container) {
-                        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                    if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 },
 
                 getActive() { return this._activeCategory; },
@@ -1903,12 +1724,10 @@
                         item.setAttribute('role', 'tab');
                         item.setAttribute('aria-selected', this._activeCategory === cat.id ? 'true' : 'false');
                         item.innerHTML = `
-                                <i class="fas" aria-hidden="true"></i>
-                                <span class="nav-label">${cat.id}</span>
-                            `;
-                        item.addEventListener('click', () => {
-                            this.setActive(cat.id);
-                        });
+                            <i class="fas" aria-hidden="true"></i>
+                            <span class="nav-label">${cat.id}</span>
+                        `;
+                        item.addEventListener('click', () => this.setActive(cat.id));
                         nav.appendChild(item);
                     });
                 },
@@ -1918,8 +1737,7 @@
                     if (!grid) return;
                     const items = MENU_DATA[this._activeCategory] || [];
                     if (!items.length) {
-                        grid.innerHTML =
-                            `<div class="empty-msg" role="status"><i class="fas fa-utensils" aria-hidden="true"></i>لا توجد أطباق في هذه الفئة</div>`;
+                        grid.innerHTML = `<div class="empty-msg" role="status"><i class="fas fa-utensils" aria-hidden="true"></i>لا توجد أطباق في هذه الفئة</div>`;
                         return;
                     }
 
@@ -1930,44 +1748,42 @@
                         const qty = Cart.getQuantity(itemId);
 
                         return `
-                                <div class="menu-card" role="listitem">
-                                    <div class="card-img">
-                                        <img data-src="${imgSrc}" alt="${UI.escape(item.name)}" loading="lazy" />
-                                        <div class="img-placeholder"><i class="fas fa-utensils" aria-hidden="true"></i></div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-top">
-                                            <div class="item-name">
-                                                <i class="fas ${icon} name-icon" aria-hidden="true"></i>
-                                                ${UI.escape(item.name)}
-                                            </div>
-                                            <span class="price-badge">${item.price} ج.م</span>
+                            <div class="menu-card" role="listitem">
+                                <div class="card-img">
+                                    <img data-src="${imgSrc}" alt="${UI.escape(item.name)}" loading="lazy" />
+                                    <div class="img-placeholder"><i class="fas fa-utensils" aria-hidden="true"></i></div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-top">
+                                        <div class="item-name">
+                                            <i class="fas ${icon} name-icon" aria-hidden="true"></i>
+                                            ${UI.escape(item.name)}
                                         </div>
-                                        ${item.desc ? `<div class="item-desc">${UI.escape(item.desc)}</div>` : ''}
-                                        <div class="card-actions">
-                                            <div class="qty-stepper" data-item-id="${itemId}">
-                                                <button class="qty-btn qty-minus" aria-label="تقليل الكمية" data-item-id="${itemId}">
-                                                    <i class="fas fa-minus" aria-hidden="true"></i>
-                                                </button>
-                                                <span class="qty-num" data-item-id="${itemId}">${qty}</span>
-                                                <button class="qty-btn qty-plus" aria-label="زيادة الكمية" data-item-id="${itemId}">
-                                                    <i class="fas fa-plus" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <button class="add-btn" data-name="${UI.escape(item.name)}" data-price="${item.price}" data-img="${imgSrc}" data-cat="${this._activeCategory}" aria-label="إضافة ${UI.escape(item.name)} إلى السلة">
-                                                <i class="fas fa-cart-plus btn-icon" aria-hidden="true"></i>
-                                                <span class="btn-label">أضف</span>
+                                        <span class="price-badge">${item.price} ج.م</span>
+                                    </div>
+                                    ${item.desc ? `<div class="item-desc">${UI.escape(item.desc)}</div>` : ''}
+                                    <div class="card-actions">
+                                        <div class="qty-stepper" data-item-id="${itemId}">
+                                            <button class="qty-btn qty-minus" aria-label="تقليل الكمية" data-item-id="${itemId}">
+                                                <i class="fas fa-minus" aria-hidden="true"></i>
+                                            </button>
+                                            <span class="qty-num" data-item-id="${itemId}">${qty}</span>
+                                            <button class="qty-btn qty-plus" aria-label="زيادة الكمية" data-item-id="${itemId}">
+                                                <i class="fas fa-plus" aria-hidden="true"></i>
                                             </button>
                                         </div>
+                                        <button class="add-btn" data-name="${UI.escape(item.name)}" data-price="${item.price}" data-img="${imgSrc}" data-cat="${this._activeCategory}" aria-label="إضافة ${UI.escape(item.name)} إلى السلة">
+                                            <i class="fas fa-plus btn-icon" aria-hidden="true"></i>
+                                            <span class="btn-label">أضف</span>
+                                        </button>
                                     </div>
                                 </div>
-                            `;
+                            </div>
+                        `;
                     }).join('');
 
-                    // ── Lazy load images ──
                     LazyLoader.refresh(grid);
 
-                    // ── Bind stepper events ──
                     grid.querySelectorAll('.qty-stepper').forEach(stepper => {
                         const itemId = stepper.getAttribute('data-item-id');
                         const card = stepper.closest('.menu-card');
@@ -2010,7 +1826,6 @@
                         updateDisplay();
                     });
 
-                    // ── Bind add button ──
                     grid.querySelectorAll('.add-btn').forEach(btn => {
                         btn.addEventListener('click', () => {
                             const name = btn.getAttribute('data-name');
@@ -2038,7 +1853,6 @@
                     });
                 },
 
-                // ── NEW: تحديث الكميات فقط دون إعادة رسم الـ DOM ──
                 updateItems() {
                     const grid = this._container;
                     if (!grid) return;
@@ -2064,7 +1878,7 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  7. MODAL (only branch locations)
+            //  7. MODAL
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const Modal = {
@@ -2080,16 +1894,12 @@
                     this._renderCart();
                     this._cartModal?.classList.add('active');
                 },
-                closeCart() {
-                    this._cartModal?.classList.remove('active');
-                },
+                closeCart() { this._cartModal?.classList.remove('active'); },
                 openLocation() {
                     this._renderLocation();
                     this._locationModal?.classList.add('active');
                 },
-                closeLocation() {
-                    this._locationModal?.classList.remove('active');
-                },
+                closeLocation() { this._locationModal?.classList.remove('active'); },
 
                 _renderCart() {
                     const container = document.getElementById('cartItemsList');
@@ -2101,8 +1911,7 @@
                     const count = Cart.count;
 
                     if (items.length === 0) {
-                        container.innerHTML =
-                            `<div class="empty-msg" style="padding:16px;" role="status"><i class="fas fa-shopping-bag" aria-hidden="true"></i>السلة فارغة<br><span style="font-size:0.7rem;">أضف أطباقك المفضلة</span></div>`;
+                        container.innerHTML = `<div class="empty-msg" style="padding:24px;" role="status"><i class="fas fa-shopping-bag" aria-hidden="true"></i>السلة فارغة<br><span style="font-size:0.8rem;opacity:0.7;">أضف أطباقك المفضلة</span></div>`;
                         summary.innerHTML = '';
                         checkoutBtn.disabled = true;
                         countBadge.textContent = '0';
@@ -2115,34 +1924,34 @@
                     let html = '';
                     items.forEach((item, idx) => {
                         html += `
-                                <div class="cart-item-row" role="listitem">
-                                    <div class="cart-item-info">
-                                        <div>
-                                            <div class="ci-name">${UI.escape(item.name)}</div>
-                                            <div class="ci-price">${item.price} ج.م</div>
-                                        </div>
+                            <div class="cart-item-row" role="listitem">
+                                <div class="cart-item-info">
+                                    <div>
+                                        <div class="ci-name">${UI.escape(item.name)}</div>
+                                        <div class="ci-price">${item.price} ج.م</div>
                                     </div>
-                                    <div class="cart-qty-control">
-                                        <button class="cq-decr" data-idx="${idx}" aria-label="تقليل كمية ${UI.escape(item.name)}">−</button>
-                                        <span class="cq-num">${item.quantity}</span>
-                                        <button class="cq-incr" data-idx="${idx}" aria-label="زيادة كمية ${UI.escape(item.name)}">+</button>
-                                        <button class="cq-remove" data-idx="${idx}" aria-label="حذف ${UI.escape(item.name)} من السلة"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
-                                    </div>
-                                    <div class="cart-item-total">${(item.price * item.quantity).toFixed(2)} ج.م</div>
                                 </div>
-                            `;
+                                <div class="cart-qty-control">
+                                    <button class="cq-decr" data-idx="${idx}" aria-label="تقليل كمية ${UI.escape(item.name)}">−</button>
+                                    <span class="cq-num">${item.quantity}</span>
+                                    <button class="cq-incr" data-idx="${idx}" aria-label="زيادة كمية ${UI.escape(item.name)}">+</button>
+                                    <button class="cq-remove" data-idx="${idx}" aria-label="حذف ${UI.escape(item.name)} من السلة"><i class="fas fa-times" aria-hidden="true"></i></button>
+                                </div>
+                                <div class="cart-item-total">${(item.price * item.quantity).toFixed(2)} ج.م</div>
+                            </div>
+                        `;
                     });
                     container.innerHTML = html;
 
                     const subtotal = Cart.total;
                     summary.innerHTML = `
-                            <div class="cart-summary-row"><span>المجموع الفرعي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
-                            <div class="fee-message">
-                                <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                سيتم التواصل معك لتحديد رسوم الدليفري
-                            </div>
-                            <div class="cart-total"><span>الإجمالي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
-                        `;
+                        <div class="cart-summary-row"><span>المجموع الفرعي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
+                        <div class="cart-total"><span>الإجمالي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
+                        <div class="fee-message">
+                            <i class="fas fa-info-circle" aria-hidden="true"></i>
+                            سيتم التواصل معك لتحديد رسوم الدليفري
+                        </div>
+                    `;
 
                     container.querySelectorAll('.cq-decr').forEach(btn => {
                         btn.addEventListener('click', () => {
@@ -2174,23 +1983,21 @@
                     const grid = document.getElementById('locationGrid');
                     if (!grid) return;
                     grid.innerHTML = LOCATIONS_DATA.map(loc => `
-                            <div class="location-card-item" data-coords="${loc.coords}" data-name="${UI.escape(loc.name)}" role="listitem">
-                                <div class="loc-icon"><i class="fas ${loc.icon}" aria-hidden="true"></i></div>
-                                <div class="loc-info">
-                                    <h4>${UI.escape(loc.name)}</h4>
-                                    <p><i class="fas fa-map-pin" aria-hidden="true"></i> ${UI.escape(loc.address)}</p>
-                                </div>
-                                <div class="loc-arrow"><i class="fas fa-chevron-left" aria-hidden="true"></i></div>
+                        <div class="location-card-item" data-coords="${loc.coords}" data-name="${UI.escape(loc.name)}" role="listitem">
+                            <div class="loc-icon"><i class="fas ${loc.icon}" aria-hidden="true"></i></div>
+                            <div class="loc-info">
+                                <h4>${UI.escape(loc.name)}</h4>
+                                <p><i class="fas fa-map-pin" aria-hidden="true"></i> ${UI.escape(loc.address)}</p>
                             </div>
-                        `).join('');
+                            <div class="loc-arrow"><i class="fas fa-chevron-left" aria-hidden="true"></i></div>
+                        </div>
+                    `).join('');
 
                     grid.querySelectorAll('.location-card-item').forEach(card => {
                         card.addEventListener('click', () => {
                             const coords = card.getAttribute('data-coords');
                             const name = card.getAttribute('data-name');
-                            window.open(
-                                `https://www.google.com/maps/search/?api=1&query=${coords}&q=${encodeURIComponent(name)}`,
-                                '_blank');
+                            window.open(`https://www.google.com/maps/search/?api=1&query=${coords}&q=${encodeURIComponent(name)}`, '_blank');
                             this.closeLocation();
                         });
                     });
@@ -2198,7 +2005,7 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            //  8. CHECKOUT (no delivery area)
+            //  8. CHECKOUT
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
             const Checkout = {
@@ -2209,34 +2016,33 @@
 
                 _showCustomerForm(prefill) {
                     prefill = prefill || {};
-
                     Swal.fire({
-                        title: '📝 بيانات التوصيل',
+                        title: 'بيانات التوصيل',
                         html: `
-                                <div style="text-align:right;">
-                                    <div class="checkout-form-group">
-                                        <label><i class="fas fa-user" aria-hidden="true"></i> الاسم الكامل</label>
-                                        <input type="text" id="custName" placeholder="أدخل اسمك" value="${UI.escape(prefill.name || '')}" autocomplete="name" />
-                                    </div>
-                                    <div class="checkout-form-group">
-                                        <label><i class="fas fa-phone" aria-hidden="true"></i> رقم الجوال</label>
-                                        <input type="tel" id="custPhone" placeholder="مثال: 01012345678" value="${UI.escape(prefill.phone || '')}" autocomplete="tel" />
-                                    </div>
-                                    <div class="checkout-form-group">
-                                        <label><i class="fas fa-map-pin" aria-hidden="true"></i> عنوان التوصيل</label>
-                                        <textarea id="custAddress" rows="2" placeholder="اكتب عنوانك بالتفصيل" autocomplete="street-address">${UI.escape(prefill.address || '')}</textarea>
-                                    </div>
-                                    <div class="fee-message">
-                                        <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                        سيتم التواصل معك الان لتحديد رسوم الدليفري
-                                    </div>
+                            <div style="text-align:right;">
+                                <div class="checkout-form-group">
+                                    <label><i class="fas fa-user" aria-hidden="true"></i> الاسم الكامل</label>
+                                    <input type="text" id="custName" placeholder="أدخل اسمك" value="${UI.escape(prefill.name || '')}" autocomplete="name" />
                                 </div>
-                            `,
+                                <div class="checkout-form-group">
+                                    <label><i class="fas fa-phone" aria-hidden="true"></i> رقم الجوال</label>
+                                    <input type="tel" id="custPhone" placeholder="مثال: 01012345678" value="${UI.escape(prefill.phone || '')}" autocomplete="tel" />
+                                </div>
+                                <div class="checkout-form-group">
+                                    <label><i class="fas fa-map-pin" aria-hidden="true"></i> عنوان التوصيل</label>
+                                    <textarea id="custAddress" rows="2" placeholder="اكتب عنوانك بالتفصيل" autocomplete="street-address">${UI.escape(prefill.address || '')}</textarea>
+                                </div>
+                                <div class="fee-message">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    سيتم التواصل معك الآن لتحديد رسوم الدليفري
+                                </div>
+                            </div>
+                        `,
                         showCancelButton: true,
                         cancelButtonText: 'إلغاء',
-                        cancelButtonColor: '#8a7a6a',
-                        confirmButtonText: 'مراجعة الطلب ➜',
-                        confirmButtonColor: '#b81a20',
+                        cancelButtonColor: '#FFFFFF',
+                        confirmButtonText: 'مراجعة الطلب',
+                        confirmButtonColor: '#8B2A20',
                         allowOutsideClick: false,
                         didOpen: () => {
                             setTimeout(() => document.getElementById('custName')?.focus(), 150);
@@ -2254,7 +2060,6 @@
                                 Swal.showValidationMessage('رقم الجوال غير صحيح');
                                 return false;
                             }
-
                             return { name, phone: cleanPhone, address };
                         }
                     }).then((result) => {
@@ -2267,35 +2072,34 @@
 
                 _showOrderReview(name, phone, address) {
                     const subtotal = Cart.total;
-
                     const rowsHtml = Cart.items.map(item => `
-                            <div class="os-row">
-                                <span>${UI.escape(item.name)} × ${item.quantity}</span>
-                                <span>${(item.price * item.quantity).toFixed(2)} ج.م</span>
-                            </div>
-                        `).join('');
+                        <div class="os-row">
+                            <span>${UI.escape(item.name)} × ${item.quantity}</span>
+                            <span>${(item.price * item.quantity).toFixed(2)} ج.م</span>
+                        </div>
+                    `).join('');
 
                     Swal.fire({
-                        title: '✅ مراجعة الطلب',
+                        title: 'مراجعة الطلب',
                         html: `
-                                <div style="text-align:right;font-size:0.8rem;margin-bottom:10px;background:var(--surface-container-low);padding:8px 12px;border-radius:10px;border:2px solid var(--outline-variant);">
-                                    <div><i class="fas fa-user" style="color:var(--brand-primary);"></i> ${UI.escape(name)}</div>
-                                    <div><i class="fas fa-phone" style="color:var(--brand-primary);"></i> ${UI.escape(phone)}</div>
-                                    <div><i class="fas fa-map-pin" style="color:var(--brand-primary);"></i> ${UI.escape(address)}</div>
-                                    <div style="margin-top:4px;color:var(--brand-primary);font-weight:600;"><i class="fas fa-truck" style="color:var(--brand-tertiary);"></i> سيتم التواصل معك لتحديد رسوم التوصيل</div>
-                                </div>
-                                <div class="order-summary-box">
-                                    ${rowsHtml}
-                                    <div class="os-row total"><span>الإجمالي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
-                                </div>
-                                <div style="font-size:0.65rem;color:var(--on-surface-variant);text-align:center;margin-top:4px;">
-                                    <i class="fas fa-whatsapp" style="color:#25D366;"></i> سيتم إرسال الطلب عبر واتساب
-                                </div>
-                            `,
+                            <div style="text-align:right;font-size:0.85rem;margin-bottom:10px;background:var(--surface-container-low);padding:12px 14px;border-radius:8px;border:1px solid var(--outline-variant);line-height:1.8;">
+                                <div><i class="fas fa-user" style="color:var(--outline);margin-left:4px;"></i> ${UI.escape(name)}</div>
+                                <div><i class="fas fa-phone" style="color:var(--outline);margin-left:4px;"></i> ${UI.escape(phone)}</div>
+                                <div><i class="fas fa-map-pin" style="color:var(--outline);margin-left:4px;"></i> ${UI.escape(address)}</div>
+                                <div style="margin-top:6px;color:var(--brand-primary);font-weight:500;font-size:0.8rem;"><i class="fas fa-truck" style="color:var(--brand-primary);margin-left:4px;"></i> سيتم التواصل معك لتحديد رسوم التوصيل</div>
+                            </div>
+                            <div class="order-summary-box">
+                                ${rowsHtml}
+                                <div class="os-row total"><span>الإجمالي</span><span>${subtotal.toFixed(2)} ج.م</span></div>
+                            </div>
+                            <div style="font-size:0.75rem;color:var(--on-surface-variant);text-align:center;margin-top:6px;">
+                                <i class="fab fa-whatsapp" style="color:#25D366;"></i> سيتم إرسال الطلب عبر واتساب
+                            </div>
+                        `,
                         showCancelButton: true,
-                        cancelButtonText: '⟵ تعديل البيانات',
-                        cancelButtonColor: '#8a7a6a',
-                        confirmButtonText: 'إرسال عبر واتساب 📤',
+                        cancelButtonText: 'تعديل البيانات',
+                        cancelButtonColor: '#FFFFFF',
+                        confirmButtonText: 'إرسال عبر واتساب',
                         confirmButtonColor: '#25D366',
                         allowOutsideClick: false
                     }).then((result) => {
@@ -2309,34 +2113,32 @@
 
                 _sendOrder(name, phone, address) {
                     const subtotal = Cart.total;
-
                     const orderLines = Cart.items.map(item =>
                         `• ${item.name} × ${item.quantity} = ${(item.price * item.quantity).toFixed(2)} ج.م`
                     ).join('\n');
 
                     const messageLines = [
-                        '🍽️ *طلب جديد من كشري هند*',
+                        '*طلب جديد — كشري هند*',
                         '━━━━━━━━━━━━━━━━━━━━━',
-                        `👤 *الاسم:* ${name}`,
-                        `📱 *الجوال:* ${phone}`,
-                        `📍 *العنوان:* ${address}`,
+                        `*الاسم:* ${name}`,
+                        `*الجوال:* ${phone}`,
+                        `*العنوان:* ${address}`,
                         '━━━━━━━━━━━━━━━━━━━━━',
-                        '📋 *تفاصيل الطلب:*',
+                        '*تفاصيل الطلب:*',
                         orderLines,
                         '━━━━━━━━━━━━━━━━━━━━━',
-                        `💰 *إجمالي الطلب:* ${subtotal.toFixed(2)} ج.م`,
-                        '🚚 *رسوم التوصيل:* سيتم التواصل معك لتحديدها',
+                        `*إجمالي الطلب:* ${subtotal.toFixed(2)} ج.م`,
+                        '*رسوم التوصيل:* سيتم التواصل معك لتحديدها',
                         '━━━━━━━━━━━━━━━━━━━━━',
-                        '🌟 شكراً لثقتكم بكشري هند!'
+                        'شكراً لثقتكم بكشري هند 💗'
                     ];
-                    const message = messageLines.join('\n');
-                    const encoded = encodeURIComponent(message);
+                    const encoded = encodeURIComponent(messageLines.join('\n'));
                     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encoded}`;
                     window.open(whatsappUrl, '_blank');
 
                     Cart.clear();
                     Modal.closeCart();
-                    Menu.updateItems(); // تحديث جزئي بعد التفريغ
+                    Menu.updateItems();
                     document.getElementById('cartBadge').textContent = '0';
                 }
             };
@@ -2356,28 +2158,17 @@
                         if (document.getElementById('cartModal')?.classList.contains('active')) {
                             Modal._renderCart();
                         }
-                        // تحديث جزئي بدلاً من إعادة الرسم
                         Menu.updateItems();
                     });
 
-                    document.getElementById('cartIconBtn')?.addEventListener('click', () => {
-                        Modal.openCart();
-                    });
-
-                    document.getElementById('locationBtn')?.addEventListener('click', () => {
-                        Modal.openLocation();
-                    });
-
-                    document.getElementById('locationCloseBtn')?.addEventListener('click', () => {
-                        Modal.closeLocation();
-                    });
+                    document.getElementById('cartIconBtn')?.addEventListener('click', () => Modal.openCart());
+                    document.getElementById('locationBtn')?.addEventListener('click', () => Modal.openLocation());
+                    document.getElementById('locationCloseBtn')?.addEventListener('click', () => Modal.closeLocation());
                     document.getElementById('locationModal')?.addEventListener('click', (e) => {
                         if (e.target === e.currentTarget) Modal.closeLocation();
                     });
 
-                    document.getElementById('modalCloseBtn')?.addEventListener('click', () => {
-                        Modal.closeCart();
-                    });
+                    document.getElementById('modalCloseBtn')?.addEventListener('click', () => Modal.closeCart());
                     document.getElementById('cartModal')?.addEventListener('click', (e) => {
                         if (e.target === e.currentTarget) Modal.closeCart();
                     });
@@ -2389,8 +2180,8 @@
                             text: 'سيتم حذف جميع الأصناف',
                             icon: 'warning',
                             showCancelButton: true,
-                            confirmButtonColor: '#ba1a1a',
-                            cancelButtonColor: '#8a7a6a',
+                            confirmButtonColor: '#8B2A20',
+                            cancelButtonColor: '#FFFFFF',
                             confirmButtonText: 'نعم، إفراغ',
                             cancelButtonText: 'إلغاء'
                         }).then((result) => {
@@ -2403,18 +2194,12 @@
                         });
                     });
 
-                    document.getElementById('checkoutBtn')?.addEventListener('click', () => {
-                        Checkout.start();
-                    });
+                    document.getElementById('checkoutBtn')?.addEventListener('click', () => Checkout.start());
 
                     document.addEventListener('keydown', (e) => {
                         if (e.key === 'Escape') {
-                            if (document.getElementById('cartModal')?.classList.contains('active')) {
-                                Modal.closeCart();
-                            }
-                            if (document.getElementById('locationModal')?.classList.contains('active')) {
-                                Modal.closeLocation();
-                            }
+                            if (document.getElementById('cartModal')?.classList.contains('active')) Modal.closeCart();
+                            if (document.getElementById('locationModal')?.classList.contains('active')) Modal.closeLocation();
                         }
                         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                             e.preventDefault();
@@ -2424,7 +2209,6 @@
 
                     document.getElementById('cartBadge').textContent = Cart.count;
                     setTimeout(() => LazyLoader.observeAll(), 200);
-                    console.log('✅ كشري هند — تم إصلاح مشكلة وميض الصور');
                 }
             };
 
